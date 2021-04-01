@@ -20,8 +20,6 @@ const renderComponentCyclically = (iterationNumber, container, markup, insertPla
 
 const mainWrapper = document.querySelector('.main');
 const header = document.querySelector('.header');
-const filmsSection = mainWrapper.querySelector('.films');
-const filmListWrapper = filmsSection.querySelector('.films-list__container');
 const footerStatistics = document.querySelector('.footer__statistics');
 
 const DEFAULT_CARDS_COUNT = 5;
@@ -30,6 +28,9 @@ const EXTRA_CARDS_COUNT = 2;
 renderComponent(header, createUserRank());
 renderComponent(mainWrapper, createSiteMenuTemplate());
 renderComponent(mainWrapper, createFilmListContainer());
+
+const filmsSection = mainWrapper.querySelector('.films');
+const filmListWrapper = filmsSection.querySelector('.films-list__container');
 
 renderComponentCyclically(DEFAULT_CARDS_COUNT, filmListWrapper, createFilmCard());
 
@@ -43,7 +44,7 @@ const extraWrappers = mainWrapper.querySelectorAll('.films-list--extra');
 
 extraWrappers.forEach((wrapper) => {
   const filmWrapper = wrapper.querySelector('.films-list__container');
-  renderComponentCyclically(filmWrapper, EXTRA_CARDS_COUNT);
+  renderComponentCyclically(EXTRA_CARDS_COUNT, filmWrapper, createFilmCard());
 });
 
 renderComponent(footerStatistics, createFooterStatistics());
