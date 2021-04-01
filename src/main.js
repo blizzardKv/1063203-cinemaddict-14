@@ -11,38 +11,40 @@ const renderComponent = (container, markup, insertPlace = 'beforeend') => {
   container.insertAdjacentHTML(insertPlace, markup);
 };
 
+// четыре операнда, наверно, слишком много для функции.
+const renderComponentCyclically = (iterationNumber, container, markup, insertPlace = 'beforeend') => {
+  for (let i = 0; i < iterationNumber; i++) {
+    renderComponent(container, markup, insertPlace);
+  }
+};
+
 const mainWrapper = document.querySelector('.main');
 const header = document.querySelector('.header');
+const filmsSection = mainWrapper.querySelector('.films');
+const filmListWrapper = filmsSection.querySelector('.films-list__container');
+const footerStatistics = document.querySelector('.footer__statistics');
 
 const DEFAULT_CARDS_COUNT = 5;
+const EXTRA_CARDS_COUNT = 2;
 
 renderComponent(header, createUserRank());
 renderComponent(mainWrapper, createSiteMenuTemplate());
-
 renderComponent(mainWrapper, createFilmListContainer());
 
-const filmListWrapper = document.querySelector('.films-list__container');
-const filmsSection = document.querySelector('.films');
-
-for (let i = 0; i < DEFAULT_CARDS_COUNT; i++) {
-  renderComponent(filmListWrapper, createFilmCard());
-}
+renderComponentCyclically(DEFAULT_CARDS_COUNT, filmListWrapper, createFilmCard());
 
 renderComponent(mainWrapper, createShowMoreButton());
 renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
 
-const extraWrappers = document.querySelectorAll('.films-list--extra');
-const EXTRA_CARDS_COUNT = 2;
+// зависимый выбор селекторов, т.к. появляется возможность выбрать только после рендера компонентов с разметкой createExtraFilmsWrapper.
+// можно рендерить сразу и обертки, и карточку - добавить опциональный аргумент для createFilmCard().
+const extraWrappers = mainWrapper.querySelectorAll('.films-list--extra');
 
 extraWrappers.forEach((wrapper) => {
   const filmWrapper = wrapper.querySelector('.films-list__container');
-  for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
-    renderComponent(filmWrapper, createFilmCard());
-  }
+  renderComponentCyclically(filmWrapper, EXTRA_CARDS_COUNT);
 });
-
-const footerStatistics = document.querySelector('.footer__statistics');
 
 renderComponent(footerStatistics, createFooterStatistics());
 
