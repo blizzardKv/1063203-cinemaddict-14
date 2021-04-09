@@ -41,15 +41,15 @@ renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
 
 const extraWrappers = mainWrapper.querySelectorAll('.films-list--extra');
 
-// extraWrappers.forEach((wrapper) => {
-//   const filmWrapper = wrapper.querySelector('.films-list__container');
-//   const renderFilmCardMultipleTimes = () => {
-//     for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
-//       renderComponent(filmWrapper, createFilmCard());
-//     }
-//   };
-//   renderFilmCardMultipleTimes();
-// });
+extraWrappers.forEach((wrapper) => {
+  const filmWrapper = wrapper.querySelector('.films-list__container');
+  const renderFilmCardMultipleTimes = () => {
+    for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
+      renderComponent(filmWrapper, createFilmCard(generateFilmMocksData()));
+    }
+  };
+  renderFilmCardMultipleTimes();
+});
 
 renderComponent(footerStatistics, createFooterStatistics());
 
