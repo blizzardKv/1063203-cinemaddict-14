@@ -8,7 +8,8 @@ import {createFooterStatistics} from './view/footerStatistics';
 import {createPopup} from './view/popup';
 import {generateFilmMocksData} from './mocks';
 
-const DEFAULT_CARDS_COUNT = 20;
+const CARDS_SHOW_STEP = 5;
+const MAX_CARDS_COUNT = 20;
 const EXTRA_CARDS_COUNT = 2;
 
 const renderComponent = (container, markup, insertPlace = 'beforeend') => {
@@ -27,15 +28,36 @@ const filmsSection = mainWrapper.querySelector('.films');
 const filmsList = filmsSection.querySelector('.films-list');
 const filmListWrapper = filmsSection.querySelector('.films-list__container');
 
+const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
+
 const renderFilmCardMultipleTimes = () => {
-  for (let i = 0; i < DEFAULT_CARDS_COUNT; i++) {
-    renderComponent(filmListWrapper, createFilmCard(generateFilmMocksData()));
+  for (let i = 0; i < CARDS_SHOW_STEP; i++) {
+    renderComponent(filmListWrapper, createFilmCard(filmCards[i]));
   }
 };
 
 renderFilmCardMultipleTimes();
 
-renderComponent(filmsList, createShowMoreButton());
+if (filmCards.length > CARDS_SHOW_STEP) {
+  let renderedCards = CARDS_SHOW_STEP;
+
+  renderComponent(filmsList, createShowMoreButton());
+
+  const showMoreButton = filmsList.querySelector('.films-list__show-more');
+
+  showMoreButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    filmCards.slice(renderedCards, renderedCards + CARDS_SHOW_STEP).forEach((card) => {
+      renderComponent(filmListWrapper, createFilmCard(card));
+    });
+    renderedCards += CARDS_SHOW_STEP;
+
+    if (renderedCards >= filmCards.length) {
+      showMoreButton.remove();
+    }
+  });
+}
+
 renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
 
@@ -53,4 +75,8 @@ extraWrappers.forEach((wrapper) => {
 
 renderComponent(footerStatistics, createFooterStatistics());
 
+// if ()
+// showMoreButton.addEventListener('click', () => {
+//
+// });
 // renderComponent(mainWrapper, createPopup());
