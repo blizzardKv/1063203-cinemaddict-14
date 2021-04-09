@@ -1,7 +1,7 @@
 const ACTIVE_CLASSNAME = 'film-card__controls-item--active';
 
 export const createFilmCard = (data) => {
-  return `<article class="film-card">
+  return `<article class="film-card" data-card-id="${data.cardId}">
     <h3 class="film-card__title">${data.title}</h3>
     <p class="film-card__rating">${data.rating}</p>
     <p class="film-card__info">

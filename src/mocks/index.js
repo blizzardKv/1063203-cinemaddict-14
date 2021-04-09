@@ -11,6 +11,11 @@ const MOSCING_DESCRIPTIONS = 'Lorem ipsum dolor sit amet, consectetur adipiscing
 const MOSCING_GENRES = ['musical', 'western', 'action', 'comedy', 'drama', 'documental', 'sci-fi'];
 const MOSCING_POSTERS = ['images/posters/made-for-each-other.png', 'images/posters/popeye-meets-sinbad.png', 'images/posters/sagebrush-trail.jpg', 'images/posters/santa-claus-conquers-the-martians.jpg', 'images/posters/the-dance-of-life.jpg', 'images/posters/the-great-flamarion.jpg', 'images/posters/the-man-with-the-golden-arm.jpg'];
 const SPLITTED_DESCRIPTIONS_STRING = splitStringBySeparator(MOSCING_DESCRIPTIONS, '. ');
+let initialId = 0;
+
+const generateId = () => {
+  return initialId++;
+};
 
 export const generateFilmMocksData = () => {
   return {
@@ -25,6 +30,7 @@ export const generateFilmMocksData = () => {
     isInWatchlist: getRandomBoolean(),
     isWatched: getRandomBoolean(),
     isFavorite: getRandomBoolean(),
+    cardId: generateId(),
   };
 };
 

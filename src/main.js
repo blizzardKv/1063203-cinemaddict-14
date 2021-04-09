@@ -7,10 +7,12 @@ import {createExtraFilmsWrapper} from './view/extraFilmsWrapper';
 import {createFooterStatistics} from './view/footerStatistics';
 import {createPopup} from './view/popup';
 import {generateFilmMocksData} from './mocks';
+import {countFavoritesFilms, countWatchedFilms, countAddedToWatchlistFilms} from './utils';
 
 const CARDS_SHOW_STEP = 5;
 const MAX_CARDS_COUNT = 20;
 const EXTRA_CARDS_COUNT = 2;
+const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
 
 const renderComponent = (container, markup, insertPlace = 'beforeend') => {
   container.insertAdjacentHTML(insertPlace, markup);
@@ -21,14 +23,12 @@ const header = document.querySelector('.header');
 const footerStatistics = document.querySelector('.footer__statistics');
 
 renderComponent(header, createUserRank());
-renderComponent(mainWrapper, createMenu());
+renderComponent(mainWrapper, createMenu(countAddedToWatchlistFilms(filmCards), countWatchedFilms(filmCards),countFavoritesFilms(filmCards)));
 renderComponent(mainWrapper, createFilmListContainer());
 
 const filmsSection = mainWrapper.querySelector('.films');
 const filmsList = filmsSection.querySelector('.films-list');
 const filmListWrapper = filmsSection.querySelector('.films-list__container');
-
-const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
 
 const renderFilmCardMultipleTimes = () => {
   for (let i = 0; i < CARDS_SHOW_STEP; i++) {
@@ -75,8 +75,4 @@ extraWrappers.forEach((wrapper) => {
 
 renderComponent(footerStatistics, createFooterStatistics());
 
-// if ()
-// showMoreButton.addEventListener('click', () => {
-//
-// });
 // renderComponent(mainWrapper, createPopup());

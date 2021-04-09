@@ -44,6 +44,18 @@ export const transpileMinutesToHour = (minutes) => {
   return `${minutes}m`;
 };
 
+export const countFavoritesFilms = (data) => {
+  return data.filter((film) => film.isFavorite).length;
+};
+
+export const countWatchedFilms = (data) => {
+  return data.filter((film) => film.isWatched).length;
+};
+
+export const countAddedToWatchlistFilms = (data) => {
+  return data.filter((film) => film.isInWatchlist).length;
+};
+
 const minutesDivisionToHours = (minutes) => {
   const hours = Math.floor(minutes / MINUTES_IN_HOUR);
   const remainsMinutesAfterDivision = minutes - hours * MINUTES_IN_HOUR;
