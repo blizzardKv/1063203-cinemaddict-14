@@ -56,6 +56,38 @@ export const countAddedToWatchlistFilms = (data) => {
   return data.filter((film) => film.isInWatchlist).length;
 };
 
+export const sortByRatingData = (data) => {
+  const sortedByRatingArray = [...data.sort((a, b) => {
+    if (a.rating > b.rating) {
+      return 1;
+    }
+
+    if (a.rating < b.rating) {
+      return -1;
+    }
+
+    return 0;
+  })];
+
+  return sortedByRatingArray.reverse().slice(0, 2);
+};
+
+export const sortByCommentsNumberData = (data) => {
+  const sortByCommentsNumberArray = [...data.sort((a, b) => {
+    if (a.comments > b.comments) {
+      return 1;
+    }
+
+    if (a.comments < b.comments) {
+      return -1;
+    }
+
+    return 0;
+  })];
+
+  return sortByCommentsNumberArray.reverse().slice(0, 2);
+};
+
 const minutesDivisionToHours = (minutes) => {
   const hours = Math.floor(minutes / MINUTES_IN_HOUR);
   const remainsMinutesAfterDivision = minutes - hours * MINUTES_IN_HOUR;
