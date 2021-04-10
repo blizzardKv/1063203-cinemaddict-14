@@ -7,7 +7,12 @@ import {createExtraFilmsWrapper} from './view/extraFilmsWrapper';
 import {createFooterStatistics} from './view/footerStatistics';
 import {createPopup} from './view/popup';
 import {generateFilmMocksData} from './mocks';
-import {countFavoritesFilms, countWatchedFilms, countAddedToWatchlistFilms} from './utils';
+import {countFavoritesFilms,
+  countWatchedFilms,
+  countAddedToWatchlistFilms,
+  sortByRatingData,
+  sortByCommentsNumberData
+} from './utils';
 
 const CARDS_SHOW_STEP = 5;
 const MAX_CARDS_COUNT = 20;
@@ -62,16 +67,14 @@ renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
 
 const extraWrappers = mainWrapper.querySelectorAll('.films-list--extra');
+const topRatedFilmsContainer = extraWrappers[0].querySelector('.films-list__container');
+const topCommentedFilmsContainer = extraWrappers[1].querySelector('.films-list__container');
 
-extraWrappers.forEach((wrapper) => {
-  const filmWrapper = wrapper.querySelector('.films-list__container');
-  const renderFilmCardMultipleTimes = () => {
-    for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
-      renderComponent(filmWrapper, createFilmCard(generateFilmMocksData()));
-    }
-  };
-  renderFilmCardMultipleTimes();
-});
+const mostRatedFilmsData = sortByRatingData(filmCards);
+const mostCommentedFilmsData = sortByCommentsNumberData(filmCards);
+
+mostRatedFilmsData.forEach((film) => renderComponent(topRatedFilmsContainer, createFilmCard(film)));
+mostCommentedFilmsData.forEach((film) => renderComponent(topCommentedFilmsContainer, createFilmCard(film)));
 
 renderComponent(footerStatistics, createFooterStatistics());
 
