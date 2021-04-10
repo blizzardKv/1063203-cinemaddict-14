@@ -16,15 +16,15 @@ export const splitStringBySeparator = (string, separator) => {
   return string.split(separator);
 };
 
-export const convertArrayAccordingToRequirements = (array) => {
-  const iterationsNumber = getRandomInteger(1, 5);
+export const convertArrayAccordingToRequirements = (array, joinSymbol, MAX_COUNT) => {
+  const iterationsNumber = getRandomInteger(1, MAX_COUNT);
   const convertedArray = [];
   for (let i = 0; i < iterationsNumber; i++) {
     const elementToTranspileIndex = getRandomInteger(0, array.length - 1);
     convertedArray.push(array[elementToTranspileIndex]);
     array.slice(elementToTranspileIndex, 1);
   }
-  return convertedArray.join('.');
+  return convertedArray.join(joinSymbol);
 };
 
 export const getRandomItemFromArray = (array) => {
@@ -86,6 +86,10 @@ export const sortByCommentsNumberData = (data) => {
   })];
 
   return sortByCommentsNumberArray.reverse().slice(0, 2);
+};
+
+export const findArrayElement = (array, id) => {
+  return array.find((item) => item.cardId === parseInt(id, 10));
 };
 
 const minutesDivisionToHours = (minutes) => {

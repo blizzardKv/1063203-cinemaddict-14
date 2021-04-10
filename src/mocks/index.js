@@ -1,3 +1,7 @@
+import dayjs from 'dayjs';
+import dayjsRandom from 'dayjs-random';
+dayjs.extend(dayjsRandom);
+
 import { splitStringBySeparator,
   convertArrayAccordingToRequirements,
   getRandomItemFromArray,
@@ -10,6 +14,10 @@ const MOSCING_TITLES = ['Shawshank Redemption', 'Green Mile', 'Lord of the Rings
 const MOSCING_DESCRIPTIONS = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.';
 const MOSCING_GENRES = ['musical', 'western', 'action', 'comedy', 'drama', 'documental', 'sci-fi'];
 const MOSCING_POSTERS = ['images/posters/made-for-each-other.png', 'images/posters/popeye-meets-sinbad.png', 'images/posters/sagebrush-trail.jpg', 'images/posters/santa-claus-conquers-the-martians.jpg', 'images/posters/the-dance-of-life.jpg', 'images/posters/the-great-flamarion.jpg', 'images/posters/the-man-with-the-golden-arm.jpg'];
+const MOSCING_DIRECTORS = ['James Cameron', 'Peter Jackson', 'Cristopher Nolan', 'Steven Splielberg', 'Quentin Tarantino', 'Guy Ritchie', 'David Fincher'];
+const MOSCING_WRITERS = ['Djoele Cohen', 'Fransis Ford Coppola', 'Charlie Caufmann', 'Woody Allen', 'Nora Effron', 'Oliver Stone', 'George Lukas'];
+const MOSCING_ACTORS = ['Alan Rickman', 'Benedict Cumberbatch', 'Benicio del Toro', ' Vincent Cassel', 'Viggo Mortensen', 'James McAvoy', 'Jake Gyllenhaal', 'Daniel Day-Lewis'];
+const MOSCING_COUNTRIES = ['Russia', 'USA', 'France', 'Germany', 'England', 'Wales', 'Denmark'];
 const SPLITTED_DESCRIPTIONS_STRING = splitStringBySeparator(MOSCING_DESCRIPTIONS, '. ');
 let initialId = 0;
 
@@ -24,39 +32,20 @@ export const generateFilmMocksData = () => {
     rating: getRandomInteger(0, 9, true).toFixed(1),
     yearOfManufacture: getRandomInteger(1900, 2021),
     duration: transpileMinutesToHour(getRandomInteger(50, 200)),
-    genre: getRandomItemFromArray(MOSCING_GENRES),
-    description: convertArrayAccordingToRequirements(SPLITTED_DESCRIPTIONS_STRING),
+    genres: convertArrayAccordingToRequirements(MOSCING_GENRES, ' ', 2),
+    description: convertArrayAccordingToRequirements(SPLITTED_DESCRIPTIONS_STRING, '.', 5),
     comments: getRandomInteger(0, 200),
     isInWatchlist: getRandomBoolean(),
     isWatched: getRandomBoolean(),
     isFavorite: getRandomBoolean(),
     cardId: generateId(),
-  };
-};
-
-export const generateFilmPopupMocksData = () => {
-  return {
-    title: 'A Little Pony Without The Carpet',
-    alternative_title: 'Laziness Who Sold Themselves',
-    total_rating: 5.3,
-    poster: 'images/posters/blue-blazes.jpg',
-    age_rating: 0,
-    director: 'Tom Ford',
-    writers: [
-      'Takeshi Kitano',
-    ],
-    actors: [
-      'Morgan Freeman',
-    ],
-    release: {
-      'date': '2019-05-11T00:00:00.000Z',
-      'release_country': 'Finland',
-    },
-    runtime: 77,
-    genre: [
-      'Comedy',
-    ],
-    description: convertArrayAccordingToRequirements(SPLITTED_DESCRIPTIONS_STRING),
+    alternativeTitle: getRandomItemFromArray(MOSCING_TITLES),
+    ageRating: getRandomInteger(0, 18),
+    releaseDate: dayjs.between('1970-01-01', '2021-03-02').format('DD MMMM YYYY'),
+    director: getRandomItemFromArray(MOSCING_DIRECTORS),
+    writers: convertArrayAccordingToRequirements(MOSCING_WRITERS, ',', 4),
+    actors: convertArrayAccordingToRequirements(MOSCING_ACTORS, ',', 2),
+    country: getRandomItemFromArray(MOSCING_COUNTRIES),
   };
 };
 

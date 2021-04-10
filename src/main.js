@@ -11,13 +11,14 @@ import {countFavoritesFilms,
   countWatchedFilms,
   countAddedToWatchlistFilms,
   sortByRatingData,
-  sortByCommentsNumberData
+  sortByCommentsNumberData,
+  findArrayElement
 } from './utils';
-
 const CARDS_SHOW_STEP = 5;
 const MAX_CARDS_COUNT = 20;
-const EXTRA_CARDS_COUNT = 2;
 const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
+const mostRatedFilmsData = sortByRatingData(filmCards);
+const mostCommentedFilmsData = sortByCommentsNumberData(filmCards);
 
 const renderComponent = (container, markup, insertPlace = 'beforeend') => {
   container.insertAdjacentHTML(insertPlace, markup);
@@ -40,6 +41,27 @@ const renderFilmCardMultipleTimes = () => {
     renderComponent(filmListWrapper, createFilmCard(filmCards[i]));
   }
 };
+
+mainWrapper.addEventListener('click', ({ target }) => {
+  const clickTargets = ['film-card__title', 'film-card__poster', 'film-card__comments'];
+  const checkClickableElement = clickTargets.find((element) => element === target.className);
+  if (target.classList.contains(checkClickableElement)) {
+    const currentPopupId = target.closest('.film-card').dataset.cardId;
+    renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, currentPopupId)));
+    const closeBtn = mainWrapper.querySelector('.film-details__close-btn');
+    closeBtn.addEventListener('click', closeModalHandler);
+  }
+});
+
+const closeModalHandler = (evt) => {
+  const filmDetailsModal = mainWrapper.querySelector('.film-details');
+  if (filmDetailsModal && evt.key === 'Escape' || evt.pointerType === 'mouse') {
+    filmDetailsModal.remove();
+    evt.target.removeEventListener('click', closeModalHandler);
+  }
+};
+
+document.addEventListener('keydown', closeModalHandler);
 
 renderFilmCardMultipleTimes();
 
@@ -70,12 +92,7 @@ const extraWrappers = mainWrapper.querySelectorAll('.films-list--extra');
 const topRatedFilmsContainer = extraWrappers[0].querySelector('.films-list__container');
 const topCommentedFilmsContainer = extraWrappers[1].querySelector('.films-list__container');
 
-const mostRatedFilmsData = sortByRatingData(filmCards);
-const mostCommentedFilmsData = sortByCommentsNumberData(filmCards);
-
 mostRatedFilmsData.forEach((film) => renderComponent(topRatedFilmsContainer, createFilmCard(film)));
 mostCommentedFilmsData.forEach((film) => renderComponent(topCommentedFilmsContainer, createFilmCard(film)));
 
 renderComponent(footerStatistics, createFooterStatistics());
-
-// renderComponent(mainWrapper, createPopup());

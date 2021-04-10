@@ -7,7 +7,7 @@ export const createFilmCard = (data) => {
     <p class="film-card__info">
       <span class="film-card__year">${data.yearOfManufacture}</span>
       <span class="film-card__duration">${data.duration}</span>
-      <span class="film-card__genre">${data.genre}</span>
+      <span class="film-card__genre">${data.genres}</span>
     </p>
     <img src="./${data.poster}" alt="" class="film-card__poster">
       <p class="film-card__description">${data.description}</p>
