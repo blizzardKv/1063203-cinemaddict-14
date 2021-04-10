@@ -19,6 +19,9 @@ const MOSCING_WRITERS = ['Djoele Cohen', 'Fransis Ford Coppola', 'Charlie Caufma
 const MOSCING_ACTORS = ['Alan Rickman', 'Benedict Cumberbatch', 'Benicio del Toro', ' Vincent Cassel', 'Viggo Mortensen', 'James McAvoy', 'Jake Gyllenhaal', 'Daniel Day-Lewis'];
 const MOSCING_COUNTRIES = ['Russia', 'USA', 'France', 'Germany', 'England', 'Wales', 'Denmark'];
 const SPLITTED_DESCRIPTIONS_STRING = splitStringBySeparator(MOSCING_DESCRIPTIONS, '. ');
+const MOSCING_COMMENT = 'Prow scuttle parrel provost Sail ho shrouds spirits boom mizzenmast yardarm. Pinnace holystone mizzenmast quarter crow\'s nest nipperkin grog yardarm hempen halter furl. Swab barque interloper chantey doubloon starboard grog black jack gangway rutters. Deadlights jack lad schooner scallywag dance the hempen jig carouser broadside cable strike colors. Bring a spring upon her cable holystone blow the man down spanker Shiver me timbers to go on account lookout wherry doubloon chase. Belay yo-ho-ho keelhaul squiffy black spot yardarm spyglass sheet transom heave to. Trysail Sail ho Corsair red ensign hulk smartly boom jib rum gangway. Case shot Shiver me timbers gangplank crack Jennys tea cup ballast Blimey lee snow crow\'s nest rutters. Fluke jib scourge of the seven seas boatswain schooner gaff booty Jack Tar transom spirits.';
+const SPLITTED_COMMENT_STRING = splitStringBySeparator(MOSCING_COMMENT, '. ');
+const AVAILABLE_EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
 let initialId = 0;
 
 const generateId = () => {
@@ -51,10 +54,10 @@ export const generateFilmMocksData = () => {
 
 export const generateFilmComments = () => {
   return {
-    id: '42',
-    author: 'Ilya O`Reilly',
-    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
-    date: '2019-05-11T16:12:32.554Z',
-    emotion: 'smile',
+    id: generateId(),
+    author: getRandomItemFromArray(MOSCING_DIRECTORS),
+    comment: convertArrayAccordingToRequirements(SPLITTED_COMMENT_STRING, '.', 2),
+    date: dayjs.between('1970-01-01', '2021-03-02').format('DD MMMM YYYY HH:MM'),
+    emotion: getRandomItemFromArray(AVAILABLE_EMOTIONS),
   };
 };

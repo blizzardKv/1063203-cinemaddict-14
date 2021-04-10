@@ -6,7 +6,9 @@ import {createShowMoreButton} from './view/showMoreButton';
 import {createExtraFilmsWrapper} from './view/extraFilmsWrapper';
 import {createFooterStatistics} from './view/footerStatistics';
 import {createPopup} from './view/popup';
-import {generateFilmMocksData} from './mocks';
+import {generateFilmMocksData, generateFilmComments} from './mocks';
+import {createComments} from './view/comments';
+import {createCommentsCount} from './view/commentsCount';
 import {countFavoritesFilms,
   countWatchedFilms,
   countAddedToWatchlistFilms,
@@ -14,9 +16,12 @@ import {countFavoritesFilms,
   sortByCommentsNumberData,
   findArrayElement
 } from './utils';
+
 const CARDS_SHOW_STEP = 5;
 const MAX_CARDS_COUNT = 20;
+const COMMENTS_COUNT = 10;
 const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
+const comments = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
 const mostRatedFilmsData = sortByRatingData(filmCards);
 const mostCommentedFilmsData = sortByCommentsNumberData(filmCards);
 
@@ -48,6 +53,11 @@ mainWrapper.addEventListener('click', ({ target }) => {
   if (target.classList.contains(checkClickableElement)) {
     const currentPopupId = target.closest('.film-card').dataset.cardId;
     renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, currentPopupId)));
+    const commentsContainer = mainWrapper.querySelector('.film-details__bottom-container');
+    for (let i = 0; i < comments.length; i++) {
+      renderComponent(commentsContainer, createComments(comments[i]), 'afterbegin');
+    }
+    renderComponent(commentsContainer, createCommentsCount(comments.length), 'afterbegin');
     const closeBtn = mainWrapper.querySelector('.film-details__close-btn');
     closeBtn.addEventListener('click', closeModalHandler);
   }
