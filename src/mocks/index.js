@@ -54,7 +54,6 @@ export const generateFilmMocksData = () => {
 
 export const generateFilmComments = () => {
   return {
-    id: generateId(),
     author: getRandomItemFromArray(MOSCING_DIRECTORS),
     comment: convertArrayAccordingToRequirements(SPLITTED_COMMENT_STRING, '.', 2),
     date: dayjs.between('1970-01-01', '2021-03-02').format('DD MMMM YYYY HH:MM'),
