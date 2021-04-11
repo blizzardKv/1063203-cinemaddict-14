@@ -38,7 +38,7 @@ export const getRandomBoolean = () => {
 
 export const transpileMinutesToHour = (minutes) => {
   if (minutes > MAX_MINUTES_IN_HOUR) {
-    return minutesDivisionToHours(minutes);
+    return divideMinutesToHours(minutes);
   }
 
   return `${minutes}m`;
@@ -92,7 +92,7 @@ export const findArrayElement = (array, id) => {
   return array.find((item) => item.cardId === parseInt(id, 10));
 };
 
-const minutesDivisionToHours = (minutes) => {
+const divideMinutesToHours = (minutes) => {
   const hours = Math.floor(minutes / MINUTES_IN_HOUR);
   const remainsMinutesAfterDivision = minutes - hours * MINUTES_IN_HOUR;
   return `${hours}h ${remainsMinutesAfterDivision}m`;
