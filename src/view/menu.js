@@ -9,8 +9,8 @@ export const createMenu = (watchlist, history, favorites) => {
     <a href="#stats" class="main-navigation__additional">Stats</a>
   </nav>
   <ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-    <li><a href="#" class="sort__button">Sort by date</a></li>
-    <li><a href="#" class="sort__button">Sort by rating</a></li>
+    <li><a href="#" class="sort__button sort__button--active" data-sort-id="all">Sort by default</a></li>
+    <li><a href="#" class="sort__button" data-sort-id="date">Sort by date</a></li>
+    <li><a href="#" class="sort__button" data-sort-id="rating">Sort by rating</a></li>
   </ul>`;
 };

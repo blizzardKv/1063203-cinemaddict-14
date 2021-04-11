@@ -16,7 +16,7 @@ export const splitStringBySeparator = (string, separator) => {
   return string.split(separator);
 };
 
-export const convertArrayAccordingToRequirements = (array, joinSymbol, MAX_COUNT) => {
+export const getRandomNumberOfElementsFromArray = (array, MAX_COUNT) => {
   const iterationsNumber = getRandomInteger(1, MAX_COUNT);
   const convertedArray = [];
   for (let i = 0; i < iterationsNumber; i++) {
@@ -24,6 +24,12 @@ export const convertArrayAccordingToRequirements = (array, joinSymbol, MAX_COUNT
     convertedArray.push(array[elementToTranspileIndex]);
     array.slice(elementToTranspileIndex, 1);
   }
+
+  return convertedArray;
+};
+
+export const convertArrayAccordingToRequirements = (array, joinSymbol, MAX_COUNT) => {
+  const convertedArray = getRandomNumberOfElementsFromArray(array, MAX_COUNT);
   return convertedArray.join(joinSymbol);
 };
 
@@ -57,7 +63,7 @@ export const countAddedToWatchlistFilms = (data) => {
 };
 
 export const sortByRatingData = (data) => {
-  const sortedByRatingArray = data.sort((a, b) => {
+  return [...data].sort((a, b) => {
     if (a.rating > b.rating) {
       return 1;
     }
@@ -68,12 +74,10 @@ export const sortByRatingData = (data) => {
 
     return 0;
   });
-
-  return sortedByRatingArray.reverse().slice(0, 2);
 };
 
 export const sortByCommentsNumberData = (data) => {
-  const sortByCommentsNumberArray = data.sort((a, b) => {
+  return [...data].sort((a, b) => {
     if (a.comments > b.comments) {
       return 1;
     }
@@ -84,12 +88,51 @@ export const sortByCommentsNumberData = (data) => {
 
     return 0;
   });
+};
 
-  return sortByCommentsNumberArray.reverse().slice(0, 2);
+export const sortByDate = (data) => {
+  return [...data].sort((a, b) => {
+    if (a.releaseDate > b.releaseDate) {
+      return 1;
+    }
+
+    if (a.releaseDate < b.releaseDate) {
+      return -1;
+    }
+
+    return 0;
+  });
+};
+
+export const transpileDataForExtraCategories = (array) => {
+  return array.reverse().slice(0, 2);
+};
+
+export const filterByWatchedFilms = (data) => {
+  return data.filter((item) => item.isWatched);
+};
+
+export const filterByFavoriteFilms = (data) => {
+  return data.filter((item) => item.isFavorite);
+};
+
+export const filterByFilmsInWatchlist = (data) => {
+  return data.filter((item) => item.isInWatchlist);
 };
 
 export const findArrayElement = (array, id) => {
   return array.find((item) => item.cardId === parseInt(id, 10));
+};
+
+export const createElement = (template) => {
+  const newElement = document.createElement('div');
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+export const removeRenderedCards = () => {
+  document.querySelectorAll('.film-card').forEach((card) => card.remove());
 };
 
 const divideMinutesToHours = (minutes) => {

@@ -7,10 +7,10 @@ import { splitStringBySeparator,
   getRandomItemFromArray,
   getRandomInteger,
   transpileMinutesToHour,
-  getRandomBoolean
+  getRandomBoolean,
+  getRandomNumberOfElementsFromArray
 } from '../utils';
-import { AVAILABLE_EMOTIONS } from '../main';
-
+const AVAILABLE_EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
 const TITLES = ['Shawshank Redemption', 'Green Mile', 'Lord of the Rings: The Return of the King', 'Interstellar', 'Lord of the Rings: The Fellowship of the Ring', 'Lord of the Rings: The Two Towers', 'Schindler List', 'Forrest Gump', 'Lion King', 'Back to the Future'];
 const DESCRIPTIONS = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.';
 const GENRES = ['musical', 'western', 'action', 'comedy', 'drama', 'documental', 'sci-fi'];
@@ -35,7 +35,7 @@ export const generateFilmMocksData = () => {
     rating: getRandomInteger(0, 9, true).toFixed(1),
     yearOfManufacture: getRandomInteger(1900, 2021),
     duration: transpileMinutesToHour(getRandomInteger(50, 200)),
-    genres: convertArrayAccordingToRequirements(GENRES, ' ', 2),
+    genres: getRandomNumberOfElementsFromArray(GENRES, 3),
     description: convertArrayAccordingToRequirements(SPLITTED_DESCRIPTIONS_STRING, '.', 5),
     comments: getRandomInteger(0, 200),
     isInWatchlist: getRandomBoolean(),
