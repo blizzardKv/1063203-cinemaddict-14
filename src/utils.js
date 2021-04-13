@@ -1,5 +1,4 @@
-import {EXTRA_CARDS_COUNT, MAX_MINUTES_IN_HOUR, MINUTES_IN_HOUR} from './const';
-import {createFilmCard} from './view/filmCard';
+import {MAX_MINUTES_IN_HOUR, MINUTES_IN_HOUR} from './const';
 
 export const getRandomInteger = (a = 0, b = 1, notNeedToRound = false) => {
   const lower = Math.ceil(Math.min(a, b));
