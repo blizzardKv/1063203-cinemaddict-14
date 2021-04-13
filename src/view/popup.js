@@ -1,7 +1,7 @@
 import {generateFilmComments} from '../mocks';
 import {createElement} from '../utils';
+import {ACTIVE_WATCHED_STATUS_CLASS_NAME} from '../const';
 
-const ACTIVE_CLASSNAME = 'film-details__watched-status--active';
 const COMMENTS_COUNT = 10;
 const comments = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
 
@@ -105,11 +105,11 @@ export const createPopup = (data) => {
       </div>
       <section class="film-details__controls">
         <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${data.isInWatchlist ? ACTIVE_CLASSNAME : ''}">Add to watchlist</label>
+        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${data.isInWatchlist ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Add to watchlist</label>
         <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-        <label for="watched" class="film-details__control-label film-details__control-label--watched ${data.isWatched ? ACTIVE_CLASSNAME : ''}">Already watched</label>
+        <label for="watched" class="film-details__control-label film-details__control-label--watched ${data.isWatched ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Already watched</label>
         <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-        <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${data.isFavorite ? ACTIVE_CLASSNAME : ''}">Add to favorites</label>
+        <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${data.isFavorite ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Add to favorites</label>
       </section>
     </div>
     <div class="film-details__bottom-container">

@@ -1,13 +1,17 @@
+import {RANKING_LIMITS} from '../const';
+
 const countUserRank = (filmsCount) => {
-  if (filmsCount >= 1 && filmsCount <= 10) {
+  if (filmsCount >= RANKING_LIMITS.NOVICE_LOWER_MARK
+    && filmsCount <= RANKING_LIMITS.NOVICE_UPPER_MARK) {
     return 'novice';
   }
 
-  if (filmsCount >= 11 && filmsCount <= 20) {
+  if (filmsCount >= RANKING_LIMITS.FAN_LOWER_MARK
+    && filmsCount <= RANKING_LIMITS.FAN_UPPER_MARK) {
     return 'fan';
   }
 
-  if (filmsCount >= 21) {
+  if (filmsCount >= RANKING_LIMITS.MOVIE_BUFF_LOWER_MARK) {
     return 'movie buff';
   }
 

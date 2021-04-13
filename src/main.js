@@ -19,6 +19,10 @@ import {countFavoritesFilms,
   removeRenderedCards,
   sortByDate
 } from './utils';
+import {ESCAPE_BUTTON,
+  ACTIVE_NAVIGATION_ITEM_CLASS_NAME,
+  ACTIVE_SORT_BUTTON_CLASS_NAME
+} from './const';
 
 const renderComponent = (container, markup, insertPlace = 'beforeend') => {
   container.insertAdjacentHTML(insertPlace, markup);
@@ -26,9 +30,6 @@ const renderComponent = (container, markup, insertPlace = 'beforeend') => {
 
 const CARDS_SHOW_STEP = 5;
 const MAX_CARDS_COUNT = 20;
-const ESCAPE_BUTTON = 'Escape';
-const ACTIVE_NAVIGATION_ITEM_CLASS_NAME = 'main-navigation__item--active';
-const ACTIVE_SORT_BUTTON_CLASS_NAME = 'sort__button--active';
 const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
 const mostRatedFilmsData = transpileDataForExtraCategories(sortByRatingData(filmCards));
 const mostCommentedFilmsData = transpileDataForExtraCategories(sortByRatingData(filmCards));

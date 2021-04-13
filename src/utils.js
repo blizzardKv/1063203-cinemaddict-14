@@ -1,5 +1,4 @@
-const MAX_MINUTES_IN_HOUR = 59;
-const MINUTES_IN_HOUR = 60;
+import {MAX_MINUTES_IN_HOUR, MINUTES_IN_HOUR} from './const';
 
 export const getRandomInteger = (a = 0, b = 1, notNeedToRound = false) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -42,7 +41,7 @@ export const getRandomBoolean = () => {
   return Math.random() < 0.5;
 };
 
-export const transpileMinutesToHour = (minutes) => {
+export const transpileMinutesToHours = (minutes) => {
   if (minutes > MAX_MINUTES_IN_HOUR) {
     return divideMinutesToHours(minutes);
   }
