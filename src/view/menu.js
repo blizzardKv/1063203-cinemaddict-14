@@ -1,10 +1,33 @@
-export const createMenu = (watchlist, history, favorites) => {
+import {FILTERS} from '../const';
+import {countWatchedFilms, countFavoritesFilms, countAddedToWatchlistFilms} from '../utils';
+
+export const filterByWatchedFilms = (data) => {
+  return data.filter((item) => item.isWatched);
+};
+
+export const filterByFavoriteFilms = (data) => {
+  return data.filter((item) => item.isFavorite);
+};
+
+export const filterByFilmsInWatchlist = (data) => {
+  return data.filter((item) => item.isInWatchlist);
+};
+
+const createFilters = (data) => {
+  const sectionsCounts = [countAddedToWatchlistFilms(data), countWatchedFilms(data), countFavoritesFilms(data)];
+  const filtersArray = [];
+  FILTERS.forEach((filter, i) => {
+    filtersArray.push(`<a href="#watchlist" class="main-navigation__item">${filter} <span class="main-navigation__item-count">${sectionsCounts[i]}</span></a>`);
+  });
+
+  return filtersArray.join('');
+};
+
+export const createMenu = (data) => {
   return `<nav class="main-navigation">
     <div class="main-navigation__items">
       <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
-      <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">${watchlist}</span></a>
-      <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">${history}</span></a>
-      <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">${favorites}</span></a>
+      ${createFilters(data)}
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
   </nav>

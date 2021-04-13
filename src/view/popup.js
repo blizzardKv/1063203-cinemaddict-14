@@ -1,6 +1,5 @@
 import {generateFilmComments, COMMENTS_COUNT} from '../mocks';
-import {createElement} from '../utils';
-import {ACTIVE_WATCHED_STATUS_CLASS_NAME} from '../const';
+import {ACTIVE_WATCHED_STATUS_CLASS_NAME, AVAILABLE_EMOTIONS} from '../const';
 
 const comments = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
 
@@ -18,14 +17,8 @@ const generateComments = () => {
   return commentsTemplatesArray.join('');
 };
 
-const createEmojiTemplate = (evt) => {
-  const emojiContainer = document.querySelector('.film-details__add-emoji-label');
-
-  if (emojiContainer.firstChild) {
-    emojiContainer.firstChild.remove();
-  }
-
-  emojiContainer.append(createElement(`<img src="images/emoji/${evt.target.value}.png" alt="${evt.target.value}" width="55" height="55">`));
+const createEmojiTemplate = () => {
+  return `<img src="images/emoji/${AVAILABLE_EMOTIONS[0]}.png" alt="${AVAILABLE_EMOTIONS[0]}" width="55" height="55">`;
 };
 
 const createComments = (data) => {
@@ -45,6 +38,25 @@ const createComments = (data) => {
 };
 
 export const createPopup = (data) => {
+  const {title,
+    rating,
+    duration,
+    genres,
+    poster,
+    description,
+    comments,
+    isInWatchlist,
+    isWatched,
+    isFavorite,
+    ageRating,
+    alternativeTitle,
+    director,
+    actors,
+    writers,
+    releaseDate,
+    country,
+  } = data;
+
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
@@ -53,62 +65,62 @@ export const createPopup = (data) => {
       </div>
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
-          <img class="film-details__poster-img" src="${data.poster}" alt="">
-          <p class="film-details__age">${data.ageRating} +</p>
+          <img class="film-details__poster-img" src="${poster}" alt="">
+          <p class="film-details__age">${ageRating} +</p>
         </div>
         <div class="film-details__info">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
-              <h3 class="film-details__title">${data.title}</h3>
-              <p class="film-details__title-original">${data.alternativeTitle}</p>
+              <h3 class="film-details__title">${title}</h3>
+              <p class="film-details__title-original">${alternativeTitle}</p>
             </div>
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${data.rating}</p>
+              <p class="film-details__total-rating">${rating}</p>
             </div>
           </div>
           <table class="film-details__table">
             <tr class="film-details__row">
               <td class="film-details__term">Director</td>
-              <td class="film-details__cell">${data.director}</td>
+              <td class="film-details__cell">${director}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${data.writers}</td>
+              <td class="film-details__cell">${writers}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">${data.actors}</td>
+              <td class="film-details__cell">${actors}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${data.releaseDate}</td>
+              <td class="film-details__cell">${releaseDate}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
-              <td class="film-details__cell">${data.duration}</td>
+              <td class="film-details__cell">${duration}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
-              <td class="film-details__cell">${data.country}</td>
+              <td class="film-details__cell">${country}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                ${createGenresStrings(data.genres)}
+                ${createGenresStrings(genres)}
             </tr>
           </table>
           <p class="film-details__film-description">
-          ${data.description}
+          ${description}
           </p>
         </div>
       </div>
       <section class="film-details__controls">
         <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${data.isInWatchlist ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Add to watchlist</label>
+        <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${isInWatchlist ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Add to watchlist</label>
         <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-        <label for="watched" class="film-details__control-label film-details__control-label--watched ${data.isWatched ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Already watched</label>
+        <label for="watched" class="film-details__control-label film-details__control-label--watched ${isWatched ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Already watched</label>
         <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-        <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${data.isFavorite ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Add to favorites</label>
+        <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${isFavorite ? ACTIVE_WATCHED_STATUS_CLASS_NAME : ''}">Add to favorites</label>
       </section>
     </div>
     <div class="film-details__bottom-container">
@@ -120,7 +132,9 @@ export const createPopup = (data) => {
             ${generateComments()}
         </ul>
         <div class="film-details__new-comment">
-          <div class="film-details__add-emoji-label"></div>
+          <div class="film-details__add-emoji-label">
+            ${createEmojiTemplate()}
+          </div>
           <label class="film-details__comment-label">
             <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
           </label>
