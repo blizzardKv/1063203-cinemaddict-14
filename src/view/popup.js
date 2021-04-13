@@ -1,8 +1,7 @@
-import {generateFilmComments} from '../mocks';
+import {generateFilmComments, COMMENTS_COUNT} from '../mocks';
 import {createElement} from '../utils';
 import {ACTIVE_WATCHED_STATUS_CLASS_NAME} from '../const';
 
-const COMMENTS_COUNT = 10;
 const comments = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
 
 const createGenresStrings = (genres) => {
@@ -19,7 +18,7 @@ const generateComments = () => {
   return commentsTemplatesArray.join('');
 };
 
-export const radioButtonsChangeHandler = (evt) => {
+const createEmojiTemplate = (evt) => {
   const emojiContainer = document.querySelector('.film-details__add-emoji-label');
 
   if (emojiContainer.firstChild) {

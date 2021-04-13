@@ -61,3 +61,8 @@ export const generateFilmComments = () => {
     emotion: getRandomItemFromArray(AVAILABLE_EMOTIONS),
   };
 };
+
+export const COMMENTS_COUNT = getRandomInteger(1, 20);
+export const CARDS_SHOW_STEP = 5;
+export const MAX_CARDS_COUNT = 20;
+export const POPUP_ITEM_ID = 0;
