@@ -11,10 +11,7 @@ import {generateFilmMocksData,
   MAX_CARDS_COUNT,
   POPUP_ITEM_ID
 } from './mocks';
-import {countWatchedFilms,
-  countAddedToWatchlistFilms,
-  countFavoritesFilms
-} from './utils';
+import {countWatchedFilms, findArrayElement} from './utils';
 import {
   EXTRA_CARDS_COUNT
 } from './const';
@@ -49,7 +46,7 @@ renderFilmCardMultipleTimes(filmCards);
 renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
 renderComponent(footerStatistics, createFooterStatistics(MAX_CARDS_COUNT));
-// renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, POPUP_ITEM_ID)));
+renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, POPUP_ITEM_ID)));
 
 const showMoreButtonHandler = (evt) => {
   evt.preventDefault();

@@ -61,6 +61,10 @@ export const countAddedToWatchlistFilms = (data) => {
   return data.filter((film) => film.isInWatchlist).length;
 };
 
+export const findArrayElement = (array, id) => {
+  return array.find((item) => item.cardId === parseInt(id, 10));
+};
+
 const divideMinutesToHours = (minutes) => {
   const hours = Math.floor(minutes / MINUTES_IN_HOUR);
   const remainsMinutesAfterDivision = minutes - hours * MINUTES_IN_HOUR;
