@@ -13,34 +13,6 @@ export const filterByFilmsInWatchlist = (data) => {
   return data.filter((item) => item.isInWatchlist);
 };
 
-export const sortByRatingData = (data) => {
-  return [...data].sort((a, b) => {
-    if (a.rating > b.rating) {
-      return 1;
-    }
-
-    if (a.rating < b.rating) {
-      return -1;
-    }
-
-    return 0;
-  });
-};
-
-export const sortByCommentsNumberData = (data) => {
-  return [...data].sort((a, b) => {
-    if (a.comments > b.comments) {
-      return 1;
-    }
-
-    if (a.comments < b.comments) {
-      return -1;
-    }
-
-    return 0;
-  });
-};
-
 export const sortByDate = (data) => {
   return [...data].sort((a, b) => {
     if (a.releaseDate > b.releaseDate) {

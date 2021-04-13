@@ -11,7 +11,11 @@ import {generateFilmMocksData,
   MAX_CARDS_COUNT,
   POPUP_ITEM_ID
 } from './mocks';
-import {countWatchedFilms, findArrayElement} from './utils';
+import {countWatchedFilms,
+  findArrayElement,
+  sortByRatingData,
+  sortByCommentsNumberData
+} from './utils';
 import {
   EXTRA_CARDS_COUNT
 } from './const';
@@ -35,13 +39,13 @@ const filmsSection = mainWrapper.querySelector('.films');
 const filmsList = filmsSection.querySelector('.films-list');
 const filmListWrapper = filmsSection.querySelector('.films-list__container');
 
-const renderFilmCardMultipleTimes = (cards) => {
-  for (let i = 0; i < CARDS_SHOW_STEP; i++) {
-    renderComponent(filmListWrapper, createFilmCard(cards[i]));
+const renderFilmCardMultipleTimes = (container, cards, iterationsNumber) => {
+  for (let i = 0; i < iterationsNumber; i++) {
+    renderComponent(container, createFilmCard(cards[i]));
   }
 };
 
-renderFilmCardMultipleTimes(filmCards);
+renderFilmCardMultipleTimes(filmListWrapper, filmCards, CARDS_SHOW_STEP);
 
 renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
@@ -61,16 +65,11 @@ const showMoreButtonHandler = (evt) => {
 };
 
 const extraWrappers = mainWrapper.querySelectorAll('.films-list--extra');
+const topRatedFilmsWrapper = extraWrappers[0].querySelector('.films-list__container');
+const mostCommentedFilmsWrapper = extraWrappers[1].querySelector('.films-list__container');
 
-extraWrappers.forEach((wrapper) => {
-  const filmWrapper = wrapper.querySelector('.films-list__container');
-  const renderFilmCardMultipleTimes = () => {
-    for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
-      renderComponent(filmWrapper, createFilmCard(filmCards[i]));
-    }
-  };
-  renderFilmCardMultipleTimes();
-});
+renderFilmCardMultipleTimes(topRatedFilmsWrapper, sortByRatingData(filmCards), EXTRA_CARDS_COUNT);
+renderFilmCardMultipleTimes(mostCommentedFilmsWrapper, sortByCommentsNumberData(filmCards), EXTRA_CARDS_COUNT);
 
 if (filmCards.length > CARDS_SHOW_STEP) {
   window.renderedCards = CARDS_SHOW_STEP;

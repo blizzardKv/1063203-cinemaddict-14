@@ -1,4 +1,5 @@
-import {MAX_MINUTES_IN_HOUR, MINUTES_IN_HOUR} from './const';
+import {EXTRA_CARDS_COUNT, MAX_MINUTES_IN_HOUR, MINUTES_IN_HOUR} from './const';
+import {createFilmCard} from './view/filmCard';
 
 export const getRandomInteger = (a = 0, b = 1, notNeedToRound = false) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -63,6 +64,34 @@ export const countAddedToWatchlistFilms = (data) => {
 
 export const findArrayElement = (array, id) => {
   return array.find((item) => item.cardId === parseInt(id, 10));
+};
+
+export const sortByRatingData = (data) => {
+  return [...data].sort((a, b) => {
+    if (a.rating < b.rating) {
+      return 1;
+    }
+
+    if (a.rating > b.rating) {
+      return -1;
+    }
+
+    return 0;
+  });
+};
+
+export const sortByCommentsNumberData = (data) => {
+  return [...data].sort((a, b) => {
+    if (a.comments < b.comments) {
+      return 1;
+    }
+
+    if (a.comments > b.comments) {
+      return -1;
+    }
+
+    return 0;
+  });
 };
 
 const divideMinutesToHours = (minutes) => {
