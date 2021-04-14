@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import dayjsRandom from 'dayjs-random';
-import {AVAILABLE_EMOTIONS} from '../const';
+import {AVAILABLE_EMOTIONS} from '../view/popup';
 
 dayjs.extend(dayjsRandom);
 
@@ -62,7 +62,6 @@ export const generateFilmComments = () => {
   };
 };
 
-export const COMMENTS_COUNT = getRandomInteger(1, 20);
 export const CARDS_SHOW_STEP = 5;
 export const MAX_CARDS_COUNT = 20;
 export const POPUP_ITEM_ID = 0;

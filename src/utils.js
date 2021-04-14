@@ -93,6 +93,10 @@ export const sortByCommentsNumberData = (data) => {
   });
 };
 
+export const setWordFirstLetterToCapital = (word) => {
+  return word[0].toUpperCase() + word.slice(1);
+};
+
 const divideMinutesToHours = (minutes) => {
   const hours = Math.floor(minutes / MINUTES_IN_HOUR);
   const remainsMinutesAfterDivision = minutes - hours * MINUTES_IN_HOUR;

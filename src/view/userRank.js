@@ -1,17 +1,17 @@
-import {RANKING_LIMITS} from '../const';
+import {RankingLimits} from '../const';
 
 const countUserRank = (filmsCount) => {
-  if (filmsCount >= RANKING_LIMITS.NOVICE_LOWER_MARK
-    && filmsCount <= RANKING_LIMITS.NOVICE_UPPER_MARK) {
+  if (filmsCount >= RankingLimits.NOVICE_LOWER_MARK
+    && filmsCount <= RankingLimits.NOVICE_UPPER_MARK) {
     return 'novice';
   }
 
-  if (filmsCount >= RANKING_LIMITS.FAN_LOWER_MARK
-    && filmsCount <= RANKING_LIMITS.FAN_UPPER_MARK) {
+  if (filmsCount >= RankingLimits.FAN_LOWER_MARK
+    && filmsCount <= RankingLimits.FAN_UPPER_MARK) {
     return 'fan';
   }
 
-  if (filmsCount >= RANKING_LIMITS.MOVIE_BUFF_LOWER_MARK) {
+  if (filmsCount >= RankingLimits.MOVIE_BUFF_LOWER_MARK) {
     return 'movie buff';
   }
 

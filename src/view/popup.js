@@ -1,36 +1,37 @@
-import {generateFilmComments, COMMENTS_COUNT} from '../mocks';
-import {ACTIVE_WATCHED_STATUS_CLASS_NAME, AVAILABLE_EMOTIONS} from '../const';
+import {generateFilmComments} from '../mocks';
+import {getRandomInteger} from '../utils';
 
-const comments = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
+export const AVAILABLE_EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
+const COMMENTS_COUNT = getRandomInteger(1, 20);
+const commentsData = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
+const ACTIVE_WATCHED_STATUS_CLASS_NAME = 'film-details__watched-status--active';
 
 const createGenresStrings = (genres) => {
-  const genresTemplatesArray = [];
-  genres.forEach((genre) => genresTemplatesArray.push(`<span class="film-details__genre">${genre}</span>`));
-  return genresTemplatesArray.join('');
+  return genres
+    .map((genre) => createGenreItemTemplate(genre))
+    .join('');
 };
 
-const generateComments = () => {
-  const commentsTemplatesArray = [];
-  for (let i = 0; i < comments.length; i++) {
-    commentsTemplatesArray.push(createComments(comments[i]));
-  }
-  return commentsTemplatesArray.join('');
+const generateComments = (comments) => {
+  return comments
+    .map((comment) => createComments(comment))
+    .join('');
 };
 
-const createEmojiTemplate = () => {
-  return `<img src="images/emoji/${AVAILABLE_EMOTIONS[0]}.png" alt="${AVAILABLE_EMOTIONS[0]}" width="55" height="55">`;
+const createGenreItemTemplate = (genre) => {
+  return `<span class="film-details__genre">${genre}</span>`;
 };
 
-const createComments = (data) => {
+const createComments = (commentsCurrentData) => {
   return `<li class="film-details__comment">
             <span class="film-details__comment-emoji">
-              <img src="./images/emoji/${data.emotion}.png" width="55" height="55" alt="emoji-${data.emotion}">
+              <img src="./images/emoji/${commentsCurrentData.emotion}.png" width="55" height="55" alt="emoji-${commentsCurrentData.emotion}">
             </span>
             <div>
-              <p class="film-details__comment-text">${data.comment}</p>
+              <p class="film-details__comment-text">${commentsCurrentData.comment}</p>
               <p class="film-details__comment-info">
-                <span class="film-details__comment-author">${data.author}</span>
-                <span class="film-details__comment-day">${data.date}</span>
+                <span class="film-details__comment-author">${commentsCurrentData.author}</span>
+                <span class="film-details__comment-day">${commentsCurrentData.date}</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>
@@ -38,7 +39,8 @@ const createComments = (data) => {
 };
 
 export const createPopup = (data) => {
-  const {title,
+  const {
+    title,
     rating,
     duration,
     genres,
@@ -129,11 +131,11 @@ export const createPopup = (data) => {
             <span class="film-details__comments-count">${comments.length}</span>
         </h3>
         <ul class="film-details__comments-list">
-            ${generateComments()}
+            ${generateComments(commentsData)}
         </ul>
         <div class="film-details__new-comment">
           <div class="film-details__add-emoji-label">
-            ${createEmojiTemplate()}
+            <img src="images/emoji/${AVAILABLE_EMOTIONS[0]}.png" alt="${AVAILABLE_EMOTIONS[0]}" width="55" height="55">
           </div>
           <label class="film-details__comment-label">
             <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>

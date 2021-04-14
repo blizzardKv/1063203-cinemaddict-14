@@ -1,7 +1,8 @@
 import {ACTIVE_CONTROL_ITEM_CLASS_NAME} from '../const';
 
 export const createFilmCard = (card) => {
-  const { cardId,
+  const {
+    cardId,
     title,
     rating,
     yearOfManufacture,
