@@ -6,7 +6,7 @@ const COMMENTS_COUNT = getRandomInteger(1, 20);
 const commentsData = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
 const ACTIVE_WATCHED_STATUS_CLASS_NAME = 'film-details__watched-status--active';
 
-const createGenresStrings = (genres) => {
+const generateGenresStrings = (genres) => {
   return genres
     .map((genre) => createGenreItemTemplate(genre))
     .join('');
@@ -18,8 +18,21 @@ const generateComments = (comments) => {
     .join('');
 };
 
+const generateEmojis = (emojis) => {
+  return emojis
+    .map((emoji) => createEmojiTemplate(emoji))
+    .join('');
+};
+
 const createGenreItemTemplate = (genre) => {
   return `<span class="film-details__genre">${genre}</span>`;
+};
+
+const createEmojiTemplate = (emoji) => {
+  return `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
+            <label class="film-details__emoji-label" for="emoji-${emoji}">
+              <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="${emoji}">
+            </label>`;
 };
 
 const createComments = (commentsCurrentData) => {
@@ -46,7 +59,6 @@ export const createPopup = (data) => {
     genres,
     poster,
     description,
-    comments,
     isInWatchlist,
     isWatched,
     isFavorite,
@@ -108,7 +120,7 @@ export const createPopup = (data) => {
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                ${createGenresStrings(genres)}
+                ${generateGenresStrings(genres)}
             </tr>
           </table>
           <p class="film-details__film-description">
@@ -128,7 +140,7 @@ export const createPopup = (data) => {
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments
-            <span class="film-details__comments-count">${comments.length}</span>
+            <span class="film-details__comments-count">${commentsData.length}</span>
         </h3>
         <ul class="film-details__comments-list">
             ${generateComments(commentsData)}
@@ -141,22 +153,7 @@ export const createPopup = (data) => {
             <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
           </label>
           <div class="film-details__emoji-list">
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
-            <label class="film-details__emoji-label" for="emoji-smile">
-              <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-            </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
-            <label class="film-details__emoji-label" for="emoji-sleeping">
-              <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-            </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
-            <label class="film-details__emoji-label" for="emoji-puke">
-              <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-            </label>
-            <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
-            <label class="film-details__emoji-label" for="emoji-angry">
-              <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-            </label>
+            ${generateEmojis(AVAILABLE_EMOTIONS)}
           </div>
         </div>
       </section>

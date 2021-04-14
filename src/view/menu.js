@@ -9,6 +9,11 @@ const filmsToFilterMap = {
     .filter((filmCard) => !filmCard.isFavorite).length,
 };
 
+const SortNames = {
+  DATE: 'date',
+  RATING: 'rating',
+};
+
 export const sortByDate = (data) => {
   return [...data].sort((a, b) => {
     if (a.releaseDate > b.releaseDate) {
@@ -31,8 +36,20 @@ const createFilters = (filmCardsData) => {
     .join((''));
 };
 
+const createSortCategorites = () => {
+  return Object.values(SortNames)
+    .map((sortName) => {
+      return createSortTemplate(sortName);
+    })
+    .join((''));
+};
+
 const createFiltersTemplate = (filterName, filmsCount) => {
   return `<a href="#${filterName}" class="main-navigation__item">${setWordFirstLetterToCapital(filterName)} <span class="main-navigation__item-count">${filmsCount}</span></a>`;
+};
+
+const createSortTemplate = (sortName) => {
+  return `<li><a href="#" class="sort__button" data-sort-id="${sortName}">Sort by ${sortName}</a></li>`;
 };
 
 export const createMenu = (filmCardsData) => {
@@ -45,7 +62,6 @@ export const createMenu = (filmCardsData) => {
   </nav>
   <ul class="sort">
     <li><a href="#" class="sort__button sort__button--active" data-sort-id="all">Sort by default</a></li>
-    <li><a href="#" class="sort__button" data-sort-id="date">Sort by date</a></li>
-    <li><a href="#" class="sort__button" data-sort-id="rating">Sort by rating</a></li>
+    ${createSortCategorites(SortNames)}
   </ul>`;
 };

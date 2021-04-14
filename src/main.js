@@ -48,7 +48,7 @@ renderFilmCardMultipleTimes(filmListWrapper, filmCards, CARDS_SHOW_STEP);
 renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
 renderComponent(footerStatistics, createFooterStatistics(MAX_CARDS_COUNT));
-// renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, POPUP_ITEM_ID)));
+renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, POPUP_ITEM_ID)));
 
 const showMoreButtonHandler = (evt) => {
   evt.preventDefault();
