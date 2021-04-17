@@ -1,9 +1,9 @@
-import {generateFilmComments} from '../mocks';
+import {generateFilmComments} from '../mocks/comments';
 import {getRandomInteger} from '../utils';
+import {AVAILABLE_EMOTIONS} from '../const';
 
-export const AVAILABLE_EMOTIONS = ['smile', 'sleeping', 'puke', 'angry'];
 const COMMENTS_COUNT = getRandomInteger(1, 20);
-const commentsData = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
+const comments = new Array(COMMENTS_COUNT).fill().map(generateFilmComments);
 const ACTIVE_WATCHED_STATUS_CLASS_NAME = 'film-details__watched-status--active';
 
 const generateGenresStrings = (genres) => {
@@ -36,15 +36,21 @@ const createEmojiTemplate = (emoji) => {
 };
 
 const createComments = (commentsCurrentData) => {
+  const {
+    emotion,
+    comment,
+    author,
+    date,
+  } = commentsCurrentData;
   return `<li class="film-details__comment">
             <span class="film-details__comment-emoji">
-              <img src="./images/emoji/${commentsCurrentData.emotion}.png" width="55" height="55" alt="emoji-${commentsCurrentData.emotion}">
+              <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-${emotion}">
             </span>
             <div>
-              <p class="film-details__comment-text">${commentsCurrentData.comment}</p>
+              <p class="film-details__comment-text">${comment}</p>
               <p class="film-details__comment-info">
-                <span class="film-details__comment-author">${commentsCurrentData.author}</span>
-                <span class="film-details__comment-day">${commentsCurrentData.date}</span>
+                <span class="film-details__comment-author">${author}</span>
+                <span class="film-details__comment-day">${date}</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>
@@ -140,10 +146,10 @@ export const createPopup = (data) => {
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments
-            <span class="film-details__comments-count">${commentsData.length}</span>
+            <span class="film-details__comments-count">${comments.length}</span>
         </h3>
         <ul class="film-details__comments-list">
-            ${generateComments(commentsData)}
+            ${generateComments(comments)}
         </ul>
         <div class="film-details__new-comment">
           <div class="film-details__add-emoji-label">

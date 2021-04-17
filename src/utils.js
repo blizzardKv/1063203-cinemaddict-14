@@ -1,5 +1,11 @@
 import {MAX_MINUTES_IN_HOUR, MINUTES_IN_HOUR} from './const';
 
+const divideMinutesToHours = (minutes) => {
+  const hours = Math.floor(minutes / MINUTES_IN_HOUR);
+  const remainsMinutesAfterDivision = minutes - hours * MINUTES_IN_HOUR;
+  return `${hours}h ${remainsMinutesAfterDivision}m`;
+};
+
 export const getRandomInteger = (a = 0, b = 1, notNeedToRound = false) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -53,14 +59,6 @@ export const countWatchedFilms = (data) => {
   return data.filter((film) => film.isWatched).length;
 };
 
-export const countFavoritesFilms = (data) => {
-  return data.filter((film) => film.isFavorite).length;
-};
-
-export const countAddedToWatchlistFilms = (data) => {
-  return data.filter((film) => film.isInWatchlist).length;
-};
-
 export const findArrayElement = (array, id) => {
   return array.find((item) => item.cardId === parseInt(id, 10));
 };
@@ -97,8 +95,16 @@ export const setWordFirstLetterToCapital = (word) => {
   return word[0].toUpperCase() + word.slice(1);
 };
 
-const divideMinutesToHours = (minutes) => {
-  const hours = Math.floor(minutes / MINUTES_IN_HOUR);
-  const remainsMinutesAfterDivision = minutes - hours * MINUTES_IN_HOUR;
-  return `${hours}h ${remainsMinutesAfterDivision}m`;
+export const sortByDate = (data) => {
+  return [...data].sort((a, b) => {
+    if (a.releaseDate > b.releaseDate) {
+      return 1;
+    }
+
+    if (a.releaseDate < b.releaseDate) {
+      return -1;
+    }
+
+    return 0;
+  });
 };

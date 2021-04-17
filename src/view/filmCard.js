@@ -1,4 +1,4 @@
-import {ACTIVE_CONTROL_ITEM_CLASS_NAME} from '../const';
+const ACTIVE_CONTROL_ITEM_CLASS_NAME = 'film-card__controls-item--active';
 
 export const createFilmCard = (card) => {
   const {
