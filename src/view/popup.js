@@ -12,8 +12,8 @@ const generateGenresStrings = (genres) => {
     .join('');
 };
 
-const generateComments = (comments) => {
-  return comments
+const generateComments = (filmCommentsId, comments) => {
+  return comments.filter((comment) => comment.commentId === filmCommentsId)
     .map((comment) => createComments(comment))
     .join('');
 };
@@ -55,6 +55,10 @@ const createComments = (commentsCurrentData) => {
               </p>
             </div>
           </li>`;
+};
+
+const countAppropriateCommentsLength = (filmCommentsId, comments) => {
+  return comments.filter((comment) => comment.commentId === filmCommentsId).length;
 };
 
 export const createPopup = (data) => {
@@ -146,10 +150,10 @@ export const createPopup = (data) => {
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments
-            <span class="film-details__comments-count">${comments.length}</span>
+            <span class="film-details__comments-count">${countAppropriateCommentsLength(0, comments)}</span>
         </h3>
         <ul class="film-details__comments-list">
-            ${generateComments(comments)}
+            ${generateComments(0, comments)}
         </ul>
         <div class="film-details__new-comment">
           <div class="film-details__add-emoji-label">

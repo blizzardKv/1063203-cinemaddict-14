@@ -46,6 +46,7 @@ export const generateFilmMocksData = () => {
     writers: convertArrayAccordingToRequirements(WRITERS, ', ', 4),
     actors: convertArrayAccordingToRequirements(ACTORS, ', ', 2),
     country: getRandomItemFromArray(COUNTRIES),
+    commentsId: getRandomInteger(0, 3),
   };
 };
 

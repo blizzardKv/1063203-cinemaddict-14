@@ -1,4 +1,9 @@
-import {convertArrayAccordingToRequirements, getRandomItemFromArray, splitStringBySeparator} from '../utils';
+import {
+  convertArrayAccordingToRequirements,
+  getRandomItemFromArray,
+  splitStringBySeparator,
+  getRandomInteger
+} from '../utils';
 import {DIRECTORS} from './film';
 import dayjs from 'dayjs';
 import {AVAILABLE_EMOTIONS} from '../const';
@@ -8,6 +13,7 @@ const SPLITTED_COMMENT_STRING = splitStringBySeparator(COMMENT, '. ');
 
 export const generateFilmComments = () => {
   return {
+    commentId: getRandomInteger(0, 3),
     author: getRandomItemFromArray(DIRECTORS),
     comment: convertArrayAccordingToRequirements(SPLITTED_COMMENT_STRING, '.', 2),
     date: dayjs.between('1970-01-01', '2021-03-02').format('DD MMMM YYYY HH:MM'),
