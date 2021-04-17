@@ -7,6 +7,7 @@ import {createExtraFilmsWrapper} from './view/extraFilmsWrapper';
 import {createFooterStatistics} from './view/footerStatistics';
 import {createSort} from './view/sort';
 import {createPopup} from './view/popup';
+import {createComments} from './view/popupComments';
 import {generateFilmMocksData,
   MAX_CARDS_COUNT,
   POPUP_ITEM_ID
@@ -25,6 +26,7 @@ const renderComponent = (container, markup, insertPlace = 'beforeend') => {
 };
 
 const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
+const FIRST_FILM_CARD_TARGET_COMMENT_ID = filmCards[0].commentId;
 const moviesWatchedByUser = countWatchedFilms(filmCards);
 
 const mainWrapper = document.querySelector('.main');
@@ -52,6 +54,9 @@ renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
 renderComponent(footerStatistics, createFooterStatistics(MAX_CARDS_COUNT));
 renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, POPUP_ITEM_ID)));
+
+const commentsContainer = mainWrapper.querySelector('.film-details__bottom-container');
+renderComponent(commentsContainer, createComments(FIRST_FILM_CARD_TARGET_COMMENT_ID));
 
 const showMoreButtonHandler = (evt) => {
   evt.preventDefault();
