@@ -1,4 +1,4 @@
-import {getRandomInteger} from '../utils';
+import {createElement, getRandomInteger} from '../utils';
 import {generateFilmComments} from '../mocks/comments';
 import {AVAILABLE_EMOTIONS} from '../const';
 
@@ -50,8 +50,27 @@ const createCommentListItem = (commentCurrentData) => {
           </li>`;
 };
 
-export const createComments = (targetCommentId) => {
-  return `<div class="film-details__bottom-container">
+export default class PopupComments {
+  constructor(commentsData) {
+    this._commentsData = commentsData;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return this.createComments(this._commentsData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  createComments(targetCommentId) {
+    return `<div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments
             <span class="film-details__comments-count">${countAppropriateCommentsLength(0, comments)}</span>
@@ -72,4 +91,9 @@ export const createComments = (targetCommentId) => {
         </div>
       </section>
     </div>`;
-};
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

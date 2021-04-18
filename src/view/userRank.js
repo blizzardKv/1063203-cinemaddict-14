@@ -1,4 +1,5 @@
 import {RankingLimits} from '../const';
+import {createElement} from '../utils';
 
 const countUserRank = (filmsCount) => {
   if (filmsCount >= RankingLimits.NOVICE_LOWER_MARK
@@ -18,13 +19,36 @@ const countUserRank = (filmsCount) => {
   return '';
 };
 
-export const createUserRank = (moviesWatchedByUser) => {
-  if (countUserRank(moviesWatchedByUser) === '') {
-    return;
+export default class UserRank {
+  constructor(moviesWatchedByUser) {
+    this._moviesWatchedByUser = moviesWatchedByUser;
+    this._element = null;
   }
 
-  return `<section class="header__profile profile">
+  getTemplate() {
+    return this.createUserRank(this._moviesWatchedByUser);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  createUserRank(moviesWatchedByUser) {
+    if (countUserRank(moviesWatchedByUser) === '') {
+      return;
+    }
+
+    return `<section class="header__profile profile">
     <p class="profile__rating">${countUserRank(moviesWatchedByUser)}</p>
     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
   </section>`;
-};
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

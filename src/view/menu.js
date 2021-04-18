@@ -1,4 +1,4 @@
-import {setWordFirstLetterToCapital} from '../utils';
+import {createElement, setWordFirstLetterToCapital} from '../utils';
 
 const ACTIVE_FILTER_CLASS_NAME = 'main-navigation__item--active';
 const ALL_FILMS_FILTER_NAME = 'all';
@@ -27,11 +27,35 @@ const createFiltersTemplate = (filterName, filmsCount) => {
     ${filterName !== ALL_FILMS_FILTER_NAME ? `<span class="main-navigation__item-count">${filmsCount}</span></a>` : ''}`;
 };
 
-export const createMenu = (filmCardsData) => {
-  return `<nav class="main-navigation">
+export default class Menu {
+  constructor(filmCardsData) {
+    this._filmCardsData = filmCardsData;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return this.createMenu(this._filmCardsData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  createMenu(filmCardsData) {
+    return `<nav class="main-navigation">
     <div class="main-navigation__items">
       ${createFilters(filmCardsData)}
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
   </nav>`;
-};
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

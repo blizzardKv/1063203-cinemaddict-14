@@ -1,3 +1,5 @@
+import {createElement} from '../utils';
+
 const ACTIVE_WATCHED_STATUS_CLASS_NAME = 'film-details__watched-status--active';
 
 const generateGenresStrings = (genres) => {
@@ -10,27 +12,46 @@ const createGenreItemTemplate = (genre) => {
   return `<span class="film-details__genre">${genre}</span>`;
 };
 
-export const createPopup = (data) => {
-  const {
-    title,
-    rating,
-    duration,
-    genres,
-    poster,
-    description,
-    isInWatchlist,
-    isWatched,
-    isFavorite,
-    ageRating,
-    alternativeTitle,
-    director,
-    actors,
-    writers,
-    releaseDate,
-    country,
-  } = data;
+export default class Popup {
+  constructor(filmData) {
+    this._filmData = filmData;
 
-  return `<section class="film-details">
+    this._element = null;
+  }
+
+  getTemplate() {
+    return this.createPopup(this._filmData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  createPopup(data) {
+    const {
+      title,
+      rating,
+      duration,
+      genres,
+      poster,
+      description,
+      isInWatchlist,
+      isWatched,
+      isFavorite,
+      ageRating,
+      alternativeTitle,
+      director,
+      actors,
+      writers,
+      releaseDate,
+      country,
+    } = data;
+
+    return `<section class="film-details" style="display:none;">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
       <div class="film-details__close">
@@ -99,4 +120,9 @@ export const createPopup = (data) => {
     <div class="film-details__bottom-container"></div>
   </form>
 </section>`;
-};
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
