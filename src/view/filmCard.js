@@ -62,6 +62,13 @@ export default class FilmCard {
   </article>`;
   }
 
+  addClickHandlers(fn) {
+    const filmTitle = this._element.querySelector('.film-card__title');
+    const filmPoster = this._element.querySelector('.film-card__poster');
+    const filmComments = this._element.querySelector('.film-card__comments');
+    [filmTitle, filmPoster, filmComments].map((filmItem) => filmItem.addEventListener('click', fn));
+  }
+
   removeElement() {
     this._element = null;
   }

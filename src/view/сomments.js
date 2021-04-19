@@ -50,7 +50,7 @@ const createCommentListItem = (commentCurrentData) => {
           </li>`;
 };
 
-export default class PopupComments {
+export default class Omments {
   constructor(commentsData) {
     this._commentsData = commentsData;
 

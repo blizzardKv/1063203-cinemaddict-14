@@ -1,5 +1,4 @@
-import {createElement, render} from '../utils';
-import FilmCardView from './filmCard';
+import {createElement} from '../utils';
 
 export default class ShowMoreButton {
   constructor() {
@@ -23,6 +22,7 @@ export default class ShowMoreButton {
   }
 
   removeElement() {
+    this._element.remove();
     this._element = null;
   }
 }
