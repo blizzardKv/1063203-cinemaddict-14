@@ -18,6 +18,7 @@ const POSTERS = ['images/posters/made-for-each-other.png', 'images/posters/popey
 const WRITERS = ['Djoele Cohen', 'Fransis Ford Coppola', 'Charlie Caufmann', 'Woody Allen', 'Nora Effron', 'Oliver Stone', 'George Lukas'];
 const ACTORS = ['Alan Rickman', 'Benedict Cumberbatch', 'Benicio del Toro', ' Vincent Cassel', 'Viggo Mortensen', 'James McAvoy', 'Jake Gyllenhaal', 'Daniel Day-Lewis'];
 const COUNTRIES = ['Russia', 'USA', 'France', 'Germany', 'England', 'Wales', 'Denmark'];
+const DIRECTORS = ['James Cameron', 'Peter Jackson', 'Cristopher Nolan', 'Steven Splielberg', 'Quentin Tarantino', 'Guy Ritchie', 'David Fincher'];
 const SPLITTED_DESCRIPTIONS_STRING = splitStringBySeparator(DESCRIPTIONS, '. ');
 let initialId = 0;
 
@@ -46,10 +47,5 @@ export const generateFilmMocksData = () => {
     writers: convertArrayAccordingToRequirements(WRITERS, ', ', 4),
     actors: convertArrayAccordingToRequirements(ACTORS, ', ', 2),
     country: getRandomItemFromArray(COUNTRIES),
-    commentsId: getRandomInteger(0, 3),
   };
 };
-
-export const DIRECTORS = ['James Cameron', 'Peter Jackson', 'Cristopher Nolan', 'Steven Splielberg', 'Quentin Tarantino', 'Guy Ritchie', 'David Fincher'];
-export const MAX_CARDS_COUNT = 20;
-export const POPUP_ITEM_ID = 0;

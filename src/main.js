@@ -7,19 +7,18 @@ import {createExtraFilmsWrapper} from './view/extraFilmsWrapper';
 import {createFooterStatistics} from './view/footerStatistics';
 import {createSort} from './view/sort';
 import {createPopup} from './view/popup';
-import {createComments} from './view/popupComments';
-import {generateFilmMocksData,
-  MAX_CARDS_COUNT,
-  POPUP_ITEM_ID
-} from './mocks/film';
+import {createComments} from './view/comments';
+import {generateFilmMocksData} from './mocks/film';
 import {countWatchedFilms,
   findArrayElement,
   sortByRatingData,
-  sortByCommentsNumberData
+  sortByCommentsNumberData,
+  getRandomInteger
 } from './utils';
 
 const EXTRA_CARDS_COUNT = 2;
 const CARDS_SHOW_STEP = 5;
+const MAX_CARDS_COUNT = 20;
 
 const renderComponent = (container, markup, insertPlace = 'beforeend') => {
   container.insertAdjacentHTML(insertPlace, markup);
@@ -53,7 +52,7 @@ renderFilmCardMultipleTimes(filmListWrapper, filmCards, CARDS_SHOW_STEP);
 renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
 renderComponent(footerStatistics, createFooterStatistics(MAX_CARDS_COUNT));
-renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, POPUP_ITEM_ID)));
+renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, getRandomInteger(0, 3))));
 
 const commentsContainer = mainWrapper.querySelector('.film-details__bottom-container');
 renderComponent(commentsContainer, createComments(FIRST_FILM_CARD_TARGET_COMMENT_ID));
