@@ -55,14 +55,7 @@ const closeHandler = () => {
   document.body.removeChild(filmPopupInstance.getElement());
   filmPopupInstance.removeElement();
   commentsInstance.removeElement();
-  document.removeEventListener('keydown', keydownHandler);
   filmPopupInstance.getElement().querySelector('.film-details__close-btn').removeEventListener('click', closeHandler);
-};
-
-const keydownHandler = (evt) => {
-  if (evt.key === ESCAPE) {
-    closeHandler();
-  }
 };
 
 const popupShowHandler = (filmCard) => {
@@ -78,7 +71,6 @@ const popupShowHandler = (filmCard) => {
   const commentsContainer = filmPopupTemplate.querySelector('.film-details__bottom-container');
   render(commentsContainer, commentsInstance.getElement(targetCommentsId), RenderPosition.BEFOREEND);
 
-  document.addEventListener('keydown', keydownHandler);
   filmPopupTemplate.querySelector('.film-details__close-btn').addEventListener('click', closeHandler);
 };
 
