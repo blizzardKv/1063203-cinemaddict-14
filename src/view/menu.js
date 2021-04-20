@@ -1,16 +1,37 @@
-export const createMenu = () => {
+import {setWordFirstLetterToCapital} from '../utils';
+
+const ACTIVE_FILTER_CLASS_NAME = 'main-navigation__item--active';
+const ALL_FILMS_FILTER_NAME = 'all';
+
+const filmsToFilterMap = {
+  all: (filmCards) => filmCards
+    .filter((filmCard) => filmCard).length,
+  watchlist: (filmCards) => filmCards
+    .filter((filmCard) => !filmCard.isInWatchlist).length,
+  watched: (filmCards) => filmCards
+    .filter((filmCard) => !filmCard.isWatched).length,
+  favorites: (filmCards) => filmCards
+    .filter((filmCard) => !filmCard.isFavorite).length,
+};
+
+const createFilters = (filmCardsData) => {
+  return Object.entries(filmsToFilterMap)
+    .map(([filterName, filmsCount]) => {
+      return createFiltersTemplate(filterName, filmsCount(filmCardsData));
+    })
+    .join((''));
+};
+
+const createFiltersTemplate = (filterName, filmsCount) => {
+  return `<a href="#${filterName}" class="main-navigation__item ${filterName === ALL_FILMS_FILTER_NAME ? ACTIVE_FILTER_CLASS_NAME : ''}">${setWordFirstLetterToCapital(filterName)}
+    ${filterName !== ALL_FILMS_FILTER_NAME ? `<span class="main-navigation__item-count">${filmsCount}</span></a>` : ''}`;
+};
+
+export const createMenu = (filmCardsData) => {
   return `<nav class="main-navigation">
     <div class="main-navigation__items">
-      <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
-      <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
-      <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
-      <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
+      ${createFilters(filmCardsData)}
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>
-  <ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-    <li><a href="#" class="sort__button">Sort by date</a></li>
-    <li><a href="#" class="sort__button">Sort by rating</a></li>
-  </ul>`;
+  </nav>`;
 };

@@ -5,50 +5,86 @@ import {createFilmListContainer} from './view/filmListContainer';
 import {createShowMoreButton} from './view/showMoreButton';
 import {createExtraFilmsWrapper} from './view/extraFilmsWrapper';
 import {createFooterStatistics} from './view/footerStatistics';
+import {createSort} from './view/sort';
 import {createPopup} from './view/popup';
+import {createComments} from './view/comments';
+import {generateFilmMocksData} from './mocks/film';
+import {countWatchedFilms,
+  findArrayElement,
+  sortByRatingData,
+  sortByCommentsNumberData,
+  getRandomInteger
+} from './utils';
 
-const DEFAULT_CARDS_COUNT = 5;
 const EXTRA_CARDS_COUNT = 2;
+const CARDS_SHOW_STEP = 5;
+const MAX_CARDS_COUNT = 20;
 
 const renderComponent = (container, markup, insertPlace = 'beforeend') => {
   container.insertAdjacentHTML(insertPlace, markup);
 };
 
+const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
+const FIRST_FILM_CARD_TARGET_COMMENT_ID = filmCards[0].commentId;
+const moviesWatchedByUser = countWatchedFilms(filmCards);
+
 const mainWrapper = document.querySelector('.main');
 const header = document.querySelector('.header');
 const footerStatistics = document.querySelector('.footer__statistics');
 
-renderComponent(header, createUserRank());
-renderComponent(mainWrapper, createMenu());
+renderComponent(header, createUserRank(moviesWatchedByUser));
+renderComponent(mainWrapper, createMenu(filmCards));
+renderComponent(mainWrapper, createSort());
 renderComponent(mainWrapper, createFilmListContainer());
 
 const filmsSection = mainWrapper.querySelector('.films');
+const filmsList = filmsSection.querySelector('.films-list');
 const filmListWrapper = filmsSection.querySelector('.films-list__container');
 
-const renderFilmCardMultipleTimes = () => {
-  for (let i = 0; i < DEFAULT_CARDS_COUNT; i++) {
-    renderComponent(filmListWrapper, createFilmCard());
+const renderFilmCardMultipleTimes = (container, cards, iterationsNumber) => {
+  for (let i = 0; i < iterationsNumber; i++) {
+    renderComponent(container, createFilmCard(cards[i]));
   }
 };
 
-renderFilmCardMultipleTimes();
+renderFilmCardMultipleTimes(filmListWrapper, filmCards, CARDS_SHOW_STEP);
 
-renderComponent(mainWrapper, createShowMoreButton());
 renderComponent(filmsSection, createExtraFilmsWrapper('Top rated'));
 renderComponent(filmsSection, createExtraFilmsWrapper('Most commented'));
+renderComponent(footerStatistics, createFooterStatistics(MAX_CARDS_COUNT));
+renderComponent(mainWrapper, createPopup(findArrayElement(filmCards, getRandomInteger(0, 3))));
+
+const commentsContainer = mainWrapper.querySelector('.film-details__bottom-container');
+renderComponent(commentsContainer, createComments(FIRST_FILM_CARD_TARGET_COMMENT_ID));
+
+const showMoreButtonHandler = (evt) => {
+  evt.preventDefault();
+  filmCards.slice(renderedCards, renderedCards + CARDS_SHOW_STEP).forEach((card) => {
+    renderComponent(filmListWrapper, createFilmCard(card));
+  });
+  renderedCards += CARDS_SHOW_STEP;
+
+  if (renderedCards >= filmCards.length) {
+    showMoreButton.remove();
+  }
+};
 
 const extraWrappers = mainWrapper.querySelectorAll('.films-list--extra');
+const topRatedFilmsWrapper = extraWrappers[0].querySelector('.films-list__container');
+const mostCommentedFilmsWrapper = extraWrappers[1].querySelector('.films-list__container');
 
-extraWrappers.forEach((wrapper) => {
-  const filmWrapper = wrapper.querySelector('.films-list__container');
-  const renderFilmCardMultipleTimes = () => {
-    for (let i = 0; i < EXTRA_CARDS_COUNT; i++) {
-      renderComponent(filmWrapper, createFilmCard());
-    }
-  };
-  renderFilmCardMultipleTimes();
-});
+renderFilmCardMultipleTimes(topRatedFilmsWrapper, sortByRatingData(filmCards), EXTRA_CARDS_COUNT);
+renderFilmCardMultipleTimes(mostCommentedFilmsWrapper, sortByCommentsNumberData(filmCards), EXTRA_CARDS_COUNT);
 
-renderComponent(footerStatistics, createFooterStatistics());
+let renderedCards, showMoreButton;
 
-renderComponent(mainWrapper, createPopup());
+if (filmCards.length > CARDS_SHOW_STEP) {
+  renderedCards = CARDS_SHOW_STEP;
+
+  renderComponent(filmsList, createShowMoreButton());
+
+  showMoreButton = filmsList.querySelector('.films-list__show-more');
+
+  showMoreButton.addEventListener('click', showMoreButtonHandler);
+}
+
