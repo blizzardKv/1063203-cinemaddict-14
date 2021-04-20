@@ -7,7 +7,7 @@ import ExtraFilmsWrapperView from './view/extraFilmsWrapper';
 import FooterStatisticsView from './view/footerStatistics';
 import SortView from './view/sort';
 import PopupView from './view/popup';
-import CommentsView from './view/сomments';
+import CommentsView from './view/comments';
 import {generateFilmMocksData} from './mocks/film';
 import {countWatchedFilms,
   sortByRatingData,
