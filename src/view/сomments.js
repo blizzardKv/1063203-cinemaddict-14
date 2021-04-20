@@ -50,20 +50,18 @@ const createCommentListItem = (commentCurrentData) => {
           </li>`;
 };
 
-export default class Omments {
-  constructor(commentsData) {
-    this._commentsData = commentsData;
-
+export default class Comments {
+  constructor() {
     this._element = null;
   }
 
-  getTemplate() {
-    return this.createComments(this._commentsData);
+  getTemplate(targetCommentId) {
+    return this.createComments(targetCommentId);
   }
 
-  getElement() {
+  getElement(targetCommentId) {
     if (!this._element) {
-      this._element = createElement(this.getTemplate());
+      this._element = createElement(this.getTemplate(targetCommentId));
     }
 
     return this._element;

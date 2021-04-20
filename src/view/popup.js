@@ -51,7 +51,7 @@ export default class Popup {
       country,
     } = data;
 
-    return `<section class="film-details" style="display:none;">
+    return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
       <div class="film-details__close">
