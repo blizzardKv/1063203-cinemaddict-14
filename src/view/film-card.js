@@ -2,42 +2,23 @@ import {createElement} from '../utils';
 
 const ACTIVE_CONTROL_ITEM_CLASS_NAME = 'film-card__controls-item--active';
 
-export default class FilmCard {
-  constructor(filmCardData) {
-    this._filmCardData = filmCardData;
+const createFilmCard = (card) => {
+  const {
+    cardId,
+    title,
+    rating,
+    yearOfManufacture,
+    duration,
+    genres,
+    poster,
+    description,
+    comments,
+    isInWatchlist,
+    isWatched,
+    isFavorite,
+  } = card;
 
-    this._element = null;
-  }
-
-  getTemplate() {
-    return this.createFilmCard(this._filmCardData);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  createFilmCard(card) {
-    const {
-      cardId,
-      title,
-      rating,
-      yearOfManufacture,
-      duration,
-      genres,
-      poster,
-      description,
-      comments,
-      isInWatchlist,
-      isWatched,
-      isFavorite,
-    } = card;
-
-    return `<article class="film-card" data-card-id="${cardId}">
+  return `<article class="film-card" data-card-id="${cardId}">
     <h3 class="film-card__title">${title}</h3>
     <p class="film-card__rating">${rating}</p>
     <p class="film-card__info">
@@ -60,6 +41,25 @@ export default class FilmCard {
         </button>
       </div>
   </article>`;
+};
+
+export default class FilmCard {
+  constructor(filmCardData) {
+    this._filmCardData = filmCardData;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCard(this._filmCardData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
   }
 
   removeElement() {

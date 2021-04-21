@@ -12,46 +12,27 @@ const createGenreItemTemplate = (genre) => {
   return `<span class="film-details__genre">${genre}</span>`;
 };
 
-export default class Popup {
-  constructor(filmData) {
-    this._filmData = filmData;
+const createPopup = (data) => {
+  const {
+    title,
+    rating,
+    duration,
+    genres,
+    poster,
+    description,
+    isInWatchlist,
+    isWatched,
+    isFavorite,
+    ageRating,
+    alternativeTitle,
+    director,
+    actors,
+    writers,
+    releaseDate,
+    country,
+  } = data;
 
-    this._element = null;
-  }
-
-  getTemplate() {
-    return this.createPopup(this._filmData);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  createPopup(data) {
-    const {
-      title,
-      rating,
-      duration,
-      genres,
-      poster,
-      description,
-      isInWatchlist,
-      isWatched,
-      isFavorite,
-      ageRating,
-      alternativeTitle,
-      director,
-      actors,
-      writers,
-      releaseDate,
-      country,
-    } = data;
-
-    return `<section class="film-details">
+  return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
       <div class="film-details__close">
@@ -120,6 +101,25 @@ export default class Popup {
     <div class="film-details__bottom-container"></div>
   </form>
 </section>`;
+}
+
+export default class Popup {
+  constructor(filmData) {
+    this._filmData = filmData;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPopup(this._filmData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
   }
 
   removeElement() {

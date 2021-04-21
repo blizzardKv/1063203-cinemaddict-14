@@ -1,12 +1,21 @@
 import {createElement} from '../utils';
 
+const createFilmListContainer = () => {
+  return `<section class="films">
+        <section class="films-list">
+            <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+            <div class="films-list__container"></div>
+        </section>
+    </section>`;
+};
+
 export default class FilmListContainer {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return this.createFilmListContainer();
+    return createFilmListContainer();
   }
 
   getElement() {
@@ -15,15 +24,6 @@ export default class FilmListContainer {
     }
 
     return this._element;
-  }
-
-  createFilmListContainer() {
-    return `<section class="films">
-        <section class="films-list">
-            <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-            <div class="films-list__container"></div>
-        </section>
-    </section>`;
   }
 
   removeElement() {

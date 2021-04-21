@@ -20,13 +20,19 @@ const createSortCategorites = () => {
     .join((''));
 };
 
+const createSort = () => {
+  return `<ul class="sort">
+    ${createSortCategorites(SortNames)}
+  </ul>`;
+};
+
 export default class Sort {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return this.createSort();
+    return createSort();
   }
 
   getElement() {
@@ -35,12 +41,6 @@ export default class Sort {
     }
 
     return this._element;
-  }
-
-  createSort() {
-    return `<ul class="sort">
-    ${createSortCategorites(SortNames)}
-  </ul>`;
   }
 
   removeElement() {

@@ -50,25 +50,8 @@ const createCommentListItem = (commentCurrentData) => {
           </li>`;
 };
 
-export default class Comments {
-  constructor() {
-    this._element = null;
-  }
-
-  getTemplate(targetCommentId) {
-    return this.createComments(targetCommentId);
-  }
-
-  getElement(targetCommentId) {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(targetCommentId));
-    }
-
-    return this._element;
-  }
-
-  createComments(targetCommentId) {
-    return `<div class="film-details__bottom-container">
+const createComments = (targetCommentId) => {
+  return `<div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments
             <span class="film-details__comments-count">${countAppropriateCommentsLength(0, comments)}</span>
@@ -89,6 +72,23 @@ export default class Comments {
         </div>
       </section>
     </div>`;
+};
+
+export default class Comments {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate(targetCommentId) {
+    return createComments(targetCommentId);
+  }
+
+  getElement(targetCommentId) {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate(targetCommentId));
+    }
+
+    return this._element;
   }
 
   removeElement() {
