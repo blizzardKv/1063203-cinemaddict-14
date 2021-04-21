@@ -1,5 +1,11 @@
 import {createElement} from '../utils';
 
+const createFooterStatistics = (filmsCount) => {
+  return `<section class="footer__statistics">
+    <p>${filmsCount} movies inside</p>
+  </section>`;
+};
+
 export default class FooterStatistics {
   constructor(filmsCount) {
     this._filmsCount = filmsCount;
@@ -8,7 +14,7 @@ export default class FooterStatistics {
   }
 
   getTemplate() {
-    return this.createFooterStatistics(this._filmsCount);
+    return createFooterStatistics(this._filmsCount);
   }
 
   getElement() {
@@ -17,12 +23,6 @@ export default class FooterStatistics {
     }
 
     return this._element;
-  }
-
-  createFooterStatistics(filmsCount) {
-    return `<section class="footer__statistics">
-    <p>${filmsCount} movies inside</p>
-  </section>`;
   }
 
   removeElement() {

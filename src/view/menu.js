@@ -23,8 +23,18 @@ const createFilters = (filmCardsData) => {
 };
 
 const createFiltersTemplate = (filterName, filmsCount) => {
-  return `<a href="#${filterName}" class="main-navigation__item ${filterName === ALL_FILMS_FILTER_NAME ? ACTIVE_FILTER_CLASS_NAME : ''}">${setWordFirstLetterToCapital(filterName)}
+  return `<a href="#${filterName}" class="main-navigation__item ${filterName === ALL_FILMS_FILTER_NAME ? ACTIVE_FILTER_CLASS_NAME : ''}">
+    ${setWordFirstLetterToCapital(filterName === ALL_FILMS_FILTER_NAME ? 'all movies' : filterName)}
     ${filterName !== ALL_FILMS_FILTER_NAME ? `<span class="main-navigation__item-count">${filmsCount}</span></a>` : ''}`;
+};
+
+const createMenu = (filmCardsData) => {
+  return `<nav class="main-navigation">
+    <div class="main-navigation__items">
+      ${createFilters(filmCardsData)}
+    </div>
+    <a href="#stats" class="main-navigation__additional">Stats</a>
+  </nav>`;
 };
 
 export default class Menu {
@@ -35,7 +45,7 @@ export default class Menu {
   }
 
   getTemplate() {
-    return this.createMenu(this._filmCardsData);
+    return createMenu(this._filmCardsData);
   }
 
   getElement() {
@@ -44,15 +54,6 @@ export default class Menu {
     }
 
     return this._element;
-  }
-
-  createMenu(filmCardsData) {
-    return `<nav class="main-navigation">
-    <div class="main-navigation__items">
-      ${createFilters(filmCardsData)}
-    </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>`;
   }
 
   removeElement() {

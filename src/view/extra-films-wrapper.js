@@ -1,5 +1,12 @@
 import { createElement } from '../utils';
 
+const createExtraFilmsWrapper = (title) => {
+  return `<section class="films-list films-list--extra">
+    <h2 class="films-list__title">${title}</h2>
+    <div class="films-list__container">
+    </div>`;
+};
+
 export default class ExtraWrappers {
   constructor(title) {
     this._title = title;
@@ -7,7 +14,7 @@ export default class ExtraWrappers {
   }
 
   getTemplate() {
-    return this.createExtraFilmsWrapper(this._title);
+    return createExtraFilmsWrapper(this._title);
   }
 
   getElement() {
@@ -16,13 +23,6 @@ export default class ExtraWrappers {
     }
 
     return this._element;
-  }
-
-  createExtraFilmsWrapper(title) {
-    return `<section class="films-list films-list--extra">
-    <h2 class="films-list__title">${title}</h2>
-    <div class="films-list__container">
-    </div>`;
   }
 
   removeElement() {
