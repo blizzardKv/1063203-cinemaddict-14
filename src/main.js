@@ -1,10 +1,10 @@
 import MenuView from './view/menu';
-import FilmCardView from './view/filmCard';
-import UserRankView from './view/userRank';
-import FilmListContainerView from './view/filmListContainer';
-import ShowMoreButtonView from './view/showMoreButton';
-import ExtraFilmsWrapperView from './view/extraFilmsWrapper';
-import FooterStatisticsView from './view/footerStatistics';
+import FilmCardView from './view/film-card';
+import UserRankView from './view/user-rank';
+import FilmListContainerView from './view/film-list-container';
+import ShowMoreButtonView from './view/show-more-button';
+import ExtraFilmsWrapperView from './view/extra-films-wrapper';
+import FooterStatisticsView from './view/footer-statistics';
 import SortView from './view/sort';
 import PopupView from './view/popup';
 import CommentsView from './view/comments';
@@ -20,6 +20,7 @@ import {countWatchedFilms,
 const EXTRA_CARDS_COUNT = 2;
 const CARDS_SHOW_STEP = 5;
 const MAX_CARDS_COUNT = 20;
+const docBody = document.body;
 
 const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
 const moviesWatchedByUser = countWatchedFilms(filmCards);
@@ -51,22 +52,22 @@ const showMoreButtonHandler = (evt) => {
 };
 
 const closeHandler = () => {
-  document.body.classList.remove('hide-overflow');
-  document.body.removeChild(filmPopupInstance.getElement());
+  docBody.classList.remove('hide-overflow');
+  filmPopupInstance.getElement().querySelector('.film-details__close-btn').removeEventListener('click', closeHandler);
+  docBody.removeChild(filmPopupInstance.getElement());
   filmPopupInstance.removeElement();
   commentsInstance.removeElement();
-  filmPopupInstance.getElement().querySelector('.film-details__close-btn').removeEventListener('click', closeHandler);
 };
 
 const popupShowHandler = (filmCard) => {
-  document.body.classList.add('hide-overflow');
+  docBody.classList.add('hide-overflow');
   const targetCommentsId = getRandomInteger(0, 3);
 
   filmPopupInstance = new PopupView(filmCard);
   commentsInstance = new CommentsView();
 
   const filmPopupTemplate = filmPopupInstance.getElement();
-  document.body.appendChild(filmPopupTemplate);
+  docBody.appendChild(filmPopupTemplate);
 
   const commentsContainer = filmPopupTemplate.querySelector('.film-details__bottom-container');
   render(commentsContainer, commentsInstance.getElement(targetCommentsId), RenderPosition.BEFOREEND);
