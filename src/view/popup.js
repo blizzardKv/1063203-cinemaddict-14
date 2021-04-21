@@ -101,7 +101,7 @@ const createPopup = (data) => {
     <div class="film-details__bottom-container"></div>
   </form>
 </section>`;
-}
+};
 
 export default class Popup {
   constructor(filmData) {
