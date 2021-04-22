@@ -1,3 +1,5 @@
+import {createElement} from '../utils';
+
 const ACTIVE_SORT_CLASS_NAME = 'sort__button--active';
 const SortNames = {
   ALL: 'default',
@@ -18,8 +20,30 @@ const createSortCategorites = () => {
     .join((''));
 };
 
-export const createSort = () => {
+const createSort = () => {
   return `<ul class="sort">
     ${createSortCategorites(SortNames)}
   </ul>`;
 };
+
+export default class Sort {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSort();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

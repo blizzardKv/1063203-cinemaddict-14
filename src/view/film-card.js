@@ -1,6 +1,8 @@
+import {createElement} from '../utils';
+
 const ACTIVE_CONTROL_ITEM_CLASS_NAME = 'film-card__controls-item--active';
 
-export const createFilmCard = (card) => {
+const createFilmCard = (card) => {
   const {
     cardId,
     title,
@@ -40,3 +42,27 @@ export const createFilmCard = (card) => {
       </div>
   </article>`;
 };
+
+export default class FilmCard {
+  constructor(filmCardData) {
+    this._filmCardData = filmCardData;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCard(this._filmCardData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

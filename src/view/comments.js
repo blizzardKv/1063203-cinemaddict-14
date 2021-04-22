@@ -1,4 +1,4 @@
-import {getRandomInteger} from '../utils';
+import {createElement, getRandomInteger} from '../utils';
 import {generateFilmComments} from '../mocks/comments';
 import {AVAILABLE_EMOTIONS} from '../const';
 
@@ -50,7 +50,7 @@ const createCommentListItem = (commentCurrentData) => {
           </li>`;
 };
 
-export const createComments = (targetCommentId) => {
+const createComments = (targetCommentId) => {
   return `<div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments
@@ -73,3 +73,25 @@ export const createComments = (targetCommentId) => {
       </section>
     </div>`;
 };
+
+export default class Comments {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate(targetCommentId) {
+    return createComments(targetCommentId);
+  }
+
+  getElement(targetCommentId) {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate(targetCommentId));
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
