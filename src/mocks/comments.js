@@ -3,7 +3,7 @@ import {
   getRandomItemFromArray,
   splitStringBySeparator,
   getRandomInteger
-} from '../utils';
+} from '../utils/utils';
 import dayjs from 'dayjs';
 import dayjsRandom from 'dayjs-random';
 import {AVAILABLE_EMOTIONS} from '../const';

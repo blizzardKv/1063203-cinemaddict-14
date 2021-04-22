@@ -1,4 +1,5 @@
-import {createElement, getRandomInteger} from '../utils';
+import AbstractView from './abstract';
+import {getRandomInteger} from '../utils/utils';
 import {generateFilmComments} from '../mocks/comments';
 import {AVAILABLE_EMOTIONS} from '../const';
 
@@ -74,24 +75,12 @@ const createComments = (targetCommentId) => {
     </div>`;
 };
 
-export default class Comments {
+export default class Comments extends AbstractView {
   constructor() {
-    this._element = null;
+    super();
   }
 
   getTemplate(targetCommentId) {
     return createComments(targetCommentId);
-  }
-
-  getElement(targetCommentId) {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(targetCommentId));
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

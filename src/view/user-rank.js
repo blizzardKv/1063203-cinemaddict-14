@@ -1,5 +1,6 @@
+import AbstractView from './abstract.js';
 import {RankingLimits} from '../const';
-import {createElement, setWordFirstLetterToCapital} from '../utils';
+import {setWordFirstLetterToCapital} from '../utils/utils';
 
 const countUserRank = (filmsCount) => {
   if (filmsCount >= RankingLimits.NOVICE_LOWER_MARK
@@ -30,25 +31,14 @@ const createUserRank = (moviesWatchedByUser) => {
   </section>`;
 };
 
-export default class UserRank {
+export default class UserRank extends AbstractView {
   constructor(moviesWatchedByUser) {
+    super();
+
     this._moviesWatchedByUser = moviesWatchedByUser;
-    this._element = null;
   }
 
   getTemplate() {
     return createUserRank(this._moviesWatchedByUser);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

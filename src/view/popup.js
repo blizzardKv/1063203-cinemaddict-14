@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 
 const ACTIVE_WATCHED_STATUS_CLASS_NAME = 'film-details__watched-status--active';
 
@@ -103,26 +103,14 @@ const createPopup = (data) => {
 </section>`;
 };
 
-export default class Popup {
+export default class Popup extends AbstractView {
   constructor(filmData) {
-    this._filmData = filmData;
+    super();
 
-    this._element = null;
+    this._filmData = filmData;
   }
 
   getTemplate() {
     return createPopup(this._filmData);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

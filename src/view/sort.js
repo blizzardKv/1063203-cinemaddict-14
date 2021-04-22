@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 
 const ACTIVE_SORT_CLASS_NAME = 'sort__button--active';
 const SortNames = {
@@ -26,24 +26,12 @@ const createSort = () => {
   </ul>`;
 };
 
-export default class Sort {
+export default class Sort extends AbstractView {
   constructor() {
-    this._element = null;
+    super();
   }
 
   getTemplate() {
     return createSort();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

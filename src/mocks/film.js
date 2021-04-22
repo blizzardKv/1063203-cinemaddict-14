@@ -7,7 +7,7 @@ import { splitStringBySeparator,
   transpileMinutesToHours,
   getRandomBoolean,
   getRandomNumberOfElementsFromArray
-} from '../utils';
+} from '../utils/utils';
 
 dayjs.extend(dayjsRandom);
 

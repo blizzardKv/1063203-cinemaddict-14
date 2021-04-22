@@ -12,10 +12,13 @@ import {generateFilmMocksData} from './mocks/film';
 import {countWatchedFilms,
   sortByRatingData,
   sortByCommentsNumberData,
-  getRandomInteger,
+  getRandomInteger
+} from './utils/utils';
+import {
   render,
-  RenderPosition
-} from './utils';
+  RenderPosition,
+  remove
+} from './utils/render';
 import { ESCAPE } from './const';
 
 const EXTRA_CARDS_COUNT = 2;
@@ -36,8 +39,7 @@ render(mainWrapper, new MenuView(filmCards).getElement(), RenderPosition.BEFOREE
 render(mainWrapper, new SortView().getElement(), RenderPosition.BEFOREEND);
 render(mainWrapper, new FilmListContainerView().getElement(), RenderPosition.BEFOREEND);
 
-const showMoreButtonHandler = (evt) => {
-  evt.preventDefault();
+const showMoreButtonHandler = () => {
   filmCards.slice(renderedCards, renderedCards + CARDS_SHOW_STEP).forEach((card) => {
     const filmCardInstance = new FilmCardView(card);
     render(filmListWrapper, filmCardInstance.getElement(), RenderPosition.BEFOREEND);
@@ -55,9 +57,8 @@ const showMoreButtonHandler = (evt) => {
 const closeHandler = () => {
   docBody.classList.remove('hide-overflow');
   filmPopupInstance.getElement().querySelector('.film-details__close-btn').removeEventListener('click', closeHandler);
-  docBody.removeChild(filmPopupInstance.getElement());
-  filmPopupInstance.removeElement();
-  commentsInstance.removeElement();
+  remove(filmPopupInstance);
+  remove(commentsInstance);
   document.removeEventListener('keydown', keydownHandler);
 };
 
@@ -118,6 +119,6 @@ if (filmCards.length > CARDS_SHOW_STEP) {
 
   render(filmsList, showMoreButtonInstance.getElement(), RenderPosition.BEFOREEND);
 
-  showMoreButtonInstance.getElement().addEventListener('click', showMoreButtonHandler);
+  showMoreButtonInstance.setClickHandler(() => showMoreButtonHandler());
 }
 

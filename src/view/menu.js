@@ -1,4 +1,5 @@
-import {createElement, setWordFirstLetterToCapital} from '../utils';
+import AbstractView from './abstract';
+import {setWordFirstLetterToCapital} from '../utils/utils';
 
 const ACTIVE_FILTER_CLASS_NAME = 'main-navigation__item--active';
 const ALL_FILMS_FILTER_NAME = 'all';
@@ -37,26 +38,14 @@ const createMenu = (filmCardsData) => {
   </nav>`;
 };
 
-export default class Menu {
+export default class Menu extends AbstractView {
   constructor(filmCardsData) {
-    this._filmCardsData = filmCardsData;
+    super();
 
-    this._element = null;
+    this._filmCardsData = filmCardsData;
   }
 
   getTemplate() {
     return createMenu(this._filmCardsData);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

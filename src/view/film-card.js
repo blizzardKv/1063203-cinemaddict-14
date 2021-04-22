@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract';
 
 const ACTIVE_CONTROL_ITEM_CLASS_NAME = 'film-card__controls-item--active';
 
@@ -43,26 +43,14 @@ const createFilmCard = (card) => {
   </article>`;
 };
 
-export default class FilmCard {
+export default class FilmCard extends AbstractView {
   constructor(filmCardData) {
-    this._filmCardData = filmCardData;
+    super();
 
-    this._element = null;
+    this._filmCardData = filmCardData;
   }
 
   getTemplate() {
     return createFilmCard(this._filmCardData);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
