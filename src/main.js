@@ -21,7 +21,7 @@ import { ESCAPE } from './const';
 
 const EXTRA_CARDS_COUNT = 2;
 const CARDS_SHOW_STEP = 5;
-const MAX_CARDS_COUNT = 0;
+const MAX_CARDS_COUNT = 20;
 const docBody = document.body;
 
 const filmCards = new Array(MAX_CARDS_COUNT).fill().map(generateFilmMocksData);
