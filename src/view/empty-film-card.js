@@ -1,12 +1,20 @@
 import {createElement} from '../utils';
 
+const createEmptyFilmCard = () => {
+  return `<section class="films">
+        <section class="films-list">
+            <h2 class="films-list__title">There are no movies in our database</h2>
+        </section>
+    </section>`;
+};
+
 export default class EmptyFilmCard {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return this.createEmptyFilmCard();
+    return createEmptyFilmCard();
   }
 
   getElement() {
@@ -15,12 +23,6 @@ export default class EmptyFilmCard {
     }
 
     return this._element;
-  }
-
-  createEmptyFilmCard() {
-    return `<section class="films-list">
-      <h2 class="films-list__title">There are no movies in our database</h2>
-    </section>`;
   }
 
   removeElement() {
