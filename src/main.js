@@ -83,7 +83,7 @@ const popupShowHandler = (filmCard) => {
   render(commentsContainer, commentsInstance.getElement(targetCommentsId), RenderPosition.BEFOREEND);
 
   document.addEventListener('keydown', keydownHandler);
-  filmPopupTemplate.querySelector('.film-details__close-btn').addEventListener('click', closeHandler);
+  filmPopupInstance.setClickHandler(() => closeHandler());
 };
 
 const renderEmptyFilmsListView = () => {
@@ -98,8 +98,7 @@ const renderFilmView = () => {
     for (let i = 0; i < iterationsNumber; i++) {
       const filmCardInstance = new FilmCardView(cards[i]);
       render(container, filmCardInstance.getElement(), RenderPosition.BEFOREEND);
-      const interactiveElements = filmCardInstance.getElement().querySelectorAll('.film-card__title, .film-card__poster, .film-card__comments');
-      Array.from(interactiveElements).map((element) => element.addEventListener('click', popupShowHandler.bind(null, cards[i])));
+      filmCardInstance.setClickHandler(() => popupShowHandler());
     }
   };
 
