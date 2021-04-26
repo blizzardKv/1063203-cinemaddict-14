@@ -90,9 +90,9 @@ const renderEmptyFilmsListView = () => {
 };
 
 const renderFilmView = () => {
+  render(mainWrapper, new SortView().getElement(), RenderPosition.BEFOREEND);
   render(mainWrapper, new FilmListContainerView().getElement(), RenderPosition.BEFOREEND);
   render(header, new UserRankView(moviesWatchedByUser).getElement(), RenderPosition.BEFOREEND);
-  render(mainWrapper, new SortView().getElement(), RenderPosition.BEFOREEND);
   const renderFilmCardMultipleTimes = (container, cards, iterationsNumber) => {
     for (let i = 0; i < iterationsNumber; i++) {
       const filmCardInstance = new FilmCardView(cards[i]);
