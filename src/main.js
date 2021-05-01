@@ -98,7 +98,7 @@ const renderFilmView = () => {
     for (let i = 0; i < iterationsNumber; i++) {
       const filmCardInstance = new FilmCardView(cards[i]);
       render(container, filmCardInstance.getElement(), RenderPosition.BEFOREEND);
-      filmCardInstance.setClickHandler(() => popupShowHandler());
+      filmCardInstance.setClickHandler(() => popupShowHandler(cards[i]));
     }
   };
 
