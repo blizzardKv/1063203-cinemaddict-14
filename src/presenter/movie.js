@@ -10,10 +10,11 @@ export default class Movie {
     this._filmProperties = filmProperties;
     this._container = this._filmProperties.container;
     this._filmCardInstance = new FilmCardView(this._filmProperties.filmData);
+    this._addEventListeners();
   }
 
-  init() {
-    this._keydownHandler();
+  _addEventListeners() {
+    this._filmCardInstance.setClickHandler(() => this._popupShowHandler());
   }
 
   _renderFilm() {
@@ -38,6 +39,7 @@ export default class Movie {
     render(commentsContainer, this._commentsInstance.getElement(targetCommentsId), RenderPosition.BEFOREEND);
 
     this._filmPopupInstance.setClickHandler(() => this._closeHandler());
+    document.addEventListener('keydown', this._keydownHandler.bind(this));
   }
 
   _closeHandler() {
