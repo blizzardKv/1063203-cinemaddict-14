@@ -1,4 +1,4 @@
-import {createElement} from '../utils/render';
+import {createElement} from '../utils/render.js';
 
 export default class Abstract {
   constructor() {
@@ -15,7 +15,7 @@ export default class Abstract {
   }
 
   getElement() {
-    if (!this._element) {
+    if (this._element === null) {
       this._element = createElement(this.getTemplate());
     }
 
@@ -24,5 +24,13 @@ export default class Abstract {
 
   removeElement() {
     this._element = null;
+  }
+
+  show() {
+    this.getElement().classList.remove('visually-hidden');
+  }
+
+  hide() {
+    this.getElement().classList.add('visually-hidden');
   }
 }
