@@ -1,49 +1,58 @@
-import {createElement} from '../utils';
+import AbstractView from './abstract.js';
+import { SortType } from '../const.js';
 
-const ACTIVE_SORT_CLASS_NAME = 'sort__button--active';
-const SortNames = {
-  ALL: 'default',
-  DATE: 'date',
-  RATING: 'rating',
+const createSortTemplate = (type, name, isActive = false) => {
+  const activeClass = isActive ? 'sort__button--active' : '';
+  return (
+    `<li><a href="#" class="sort__button ${activeClass}" data-sort-type="${type}">Sort by ${name}</a></li>`
+  );
 };
 
-const createSortTemplate = (sortName) => {
-  const dataSortId = Object.keys(SortNames).find((key) => SortNames[key] === sortName).toLowerCase();
-  return `<li><a href="#" class="sort__button ${sortName === SortNames.ALL ? ACTIVE_SORT_CLASS_NAME : ''}" data-sort-id="${dataSortId}">Sort by ${sortName}</a></li>`;
+const createSiteSortTemplate = (inicialSortType) => {
+  return (
+    `<ul class="sort">
+      ${createSortTemplate(SortType.DEFAULT, 'default', inicialSortType === SortType.DEFAULT)}
+      ${createSortTemplate(SortType.BY_DATE, 'date', inicialSortType === SortType.BY_DATE)}
+      ${createSortTemplate(SortType.BY_RATING, 'rating', inicialSortType === SortType.BY_RATING)}
+    </ul>`
+  );
 };
 
-const createSortCategorites = () => {
-  return Object.values(SortNames)
-    .map((sortName) => {
-      return createSortTemplate(sortName);
-    })
-    .join((''));
-};
+export default class SiteSort extends AbstractView {
+  constructor(inicialSortType) {
+    super();
 
-const createSort = () => {
-  return `<ul class="sort">
-    ${createSortCategorites(SortNames)}
-  </ul>`;
-};
+    this._inicialSortType = inicialSortType;
 
-export default class Sort {
-  constructor() {
-    this._element = null;
+    this._sortTypeClickHandler = this._sortTypeClickHandler.bind(this);
   }
 
   getTemplate() {
-    return createSort();
+    return createSiteSortTemplate(this._inicialSortType);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
+  setSortTypeClickHandler(callback) {
+    this._callback.clickSortType = callback;
+    this.getElement().addEventListener('click', this._sortTypeClickHandler);
+  }
+
+  _removeButtonActive() {
+    this.getElement().querySelector('.sort__button.sort__button--active').classList.remove('sort__button--active');
+  }
+
+  _sortTypeClickHandler(evt) {
+    const target = evt.target;
+    if (target.tagName !== 'A') {
+      return;
     }
 
-    return this._element;
-  }
+    evt.preventDefault();
 
-  removeElement() {
-    this._element = null;
+    if (!target.classList.contains('sort__button--active')) {
+      this._removeButtonActive();
+      target.classList.add('sort__button--active');
+    }
+
+    this._callback.clickSortType(target.dataset.sortType);
   }
 }
