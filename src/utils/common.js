@@ -13,6 +13,7 @@ export const shake = (element) => {
   element.classList.add('shake');
   setTimeout(() => element.classList.remove('shake'), SHAKE_TIMEOUT);
 };
+
 export const makeWord = () => {
   let someText = '';
   const someLetter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -21,4 +22,8 @@ export const makeWord = () => {
     someText += someLetter.charAt(Math.floor(Math.random() * someLetter.length));
 
   return someText;
+};
+
+export const isOnline = () => {
+  return window.navigator.onLine;
 };

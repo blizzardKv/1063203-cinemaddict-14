@@ -10,14 +10,21 @@ import { FilterType, UpdateType } from './const.js';
 import Api from './api.js';
 import { render, remove } from './utils/render.js';
 import { makeWord } from './utils/common.js';
+import Store from './store.js';
+import Provider from './provider.js';
 
 const AUTHORIZATION = `Basic ${makeWord()}`;
 const END_POINT = 'https://14.ecmascript.pages.academy/cinemaddict';
+const STORE_PREFIX = 'cinemaddict-localstorage';
+const STORE_VER = 'v14';
+const STORE_NAME = `${STORE_PREFIX}-${STORE_VER}`;
 
 const siteMainElement = document.querySelector('.main');
 const header = document.querySelector('.header');
 const statistics = document.querySelector('.footer__statistics');
 const api = new Api(END_POINT, AUTHORIZATION);
+const store = new Store(STORE_NAME, window.localStorage);
+const apiWithProvider = new Provider(api, store);
 
 const filmsModel = new FilmsModel();
 const filterModel = new FilterModel();
@@ -25,7 +32,7 @@ const commentsModel = new CommentsModel();
 const emptyFilmCountView = new StatisticsView(0);
 
 const profilePresenter = new ProfilePresenter(header, filmsModel);
-const filmsListPresenter = new MovieListPresenter(siteMainElement, filmsModel, filterModel, commentsModel, api);
+const filmsListPresenter = new MovieListPresenter(siteMainElement, filmsModel, filterModel, commentsModel, apiWithProvider);
 const filterPresenter = new FilterPresenter(siteMainElement, filterModel, filmsModel);
 const statsPresenter = new StatsPresenter(siteMainElement, filmsModel, profilePresenter);
 
@@ -60,7 +67,7 @@ statsPresenter.init();
 statsPresenter.hide();
 render(statistics, emptyFilmCountView);
 
-api.getFilms()
+apiWithProvider.getFilms()
   .then((films) => {
     filmsModel.set(UpdateType.INIT, films);
     renderApi();
@@ -69,3 +76,16 @@ api.getFilms()
     filmsModel.set(UpdateType.INIT, []);
     renderApi();
   });
+
+window.addEventListener('load', () => {
+  navigator.serviceWorker.register('/sw.js');
+});
+
+window.addEventListener('online', () => {
+  document.title = document.title.replace(' [offline]', '');
+  apiWithProvider.sync();
+});
+
+window.addEventListener('offline', () => {
+  document.title += ' [offline]';
+});
