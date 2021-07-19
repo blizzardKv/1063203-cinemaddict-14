@@ -64,11 +64,11 @@ export default class Api {
   }
 
   _load({
-          url,
-          method = Method.GET,
-          body = null,
-          headers = new Headers(),
-        }) {
+    url,
+    method = Method.GET,
+    body = null,
+    headers = new Headers(),
+  }) {
     headers.append('Authorization', this._authorization);
 
     return fetch(
