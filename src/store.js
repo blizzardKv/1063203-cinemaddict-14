@@ -48,6 +48,6 @@ export default class Store {
   }
 
   static deleteItem() {
-    return 222;
+    return 333;
   }
 }
