@@ -42,4 +42,8 @@ export default class Store {
       JSON.stringify(store),
     );
   }
+
+  static deleteItem() {
+    return 222;
+  }
 }
