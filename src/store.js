@@ -12,6 +12,10 @@ export default class Store {
     }
   }
 
+  static kappa() {
+    return 123;
+  }
+
   setItems(items) {
     this._storage.setItem(
       this._storeKey,
